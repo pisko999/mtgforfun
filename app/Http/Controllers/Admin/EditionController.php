@@ -74,6 +74,7 @@ RaritiesRepository $raritiesRepository)
         // adding each card
         foreach ($cards as $card) {
             $localCards = $this->cardRepository->getCardByNameAndEdition($card->name, $this->edition->id);
+            //if card dont exist
             if (count($localCards) == 0) {
 
                 //if card exist only in foil version, we add directly foil card
@@ -82,9 +83,14 @@ RaritiesRepository $raritiesRepository)
 
                 $this->addCard($card, $foil);
             }
+            //if exist
             else{
-                foreach ($localCards as $localCard){
-                    $this->addImage($card,$localCard->id);
+                foreach ($localCards as $localCard) {
+                    //if dont have image
+                    if ($localCard->product->image == null) {
+                        //\Debugbar::info($localCard->product->image);
+                        $this->addImage($card, $localCard->id);
+                    }
                 }
             }
         }
@@ -139,7 +145,7 @@ RaritiesRepository $raritiesRepository)
                             '?')
                     ))) .
             ".jpg";
-
+//echo $img_path;
         return $img_path;
     }
 
@@ -177,18 +183,19 @@ RaritiesRepository $raritiesRepository)
         // if directory with setcode doesnt exists, we have to create it
         if (!file_exists(storage_path("app/public/image/" . $this->edition->sign))) {
 
-            \Debugbar::info(\Storage::makeDirectory("public/image/" . $this->edition->sign, 0755, true));
+            \Storage::makeDirectory("public/image/" . $this->edition->sign, 0755, true);
         }
 
-        // some output (downloading images takes some time)
-        echo("getting image for " . $card->name . " from " . $this->edition->sign . "\n");
+        if(!file_exists("app/public/". $img_path)) {
+            // some output (downloading images takes some time)
+            echo("getting image for " . $card->name . " from " . $this->edition->sign . "\n");
 
-        // downloading image
-        $contents = file_get_contents($url);
+            // downloading image
+            $contents = file_get_contents($url);
 
-        // saving image
-        file_put_contents(storage_path("app/public/" . $img_path), $contents);
-
+            // saving image
+            file_put_contents(storage_path("app/public/" . $img_path), $contents);
+        }
         // saving path to DB
         \DB::table('images')->insert([
             'alt' => $card->name,
