@@ -20,6 +20,8 @@ interface CardRepositoryInterface
 
     public function getCardByNameAndEdition($cardName, $edition_id);
 
+    public function getCardsByEditionGet($editionId);
+
     public function getCardsByEditionWithProductAndStock($edition_id);
 
     public function add(CardAddJsonRequest $request, Product $product, Edition $set);

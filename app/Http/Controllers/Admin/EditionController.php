@@ -70,11 +70,16 @@ class EditionController extends Controller
             throw new \Exception($e);
         }
 
+        $localCards = $this->cardRepository->getCardsByEditionGet($this->edition->id);
+//\Debugbar::info($localCards[0]);
         // adding each card
         foreach ($cards as $card) {
-            $localCards = $this->cardRepository->getCardByNameAndEdition($card->name, $this->edition->id);
+            //\Debugbar::info();
             //if card dont exist
-            if (count($localCards) == 0) {
+            $n = $localCards->filter( function ($e) use ($card){return $e->product->name == $card->name;});
+            //\Debugbar::info($n);
+
+            if($n->count() == 0){
 
                 //if card exist only in foil version, we add directly foil card
                 $foil = ($card->foil && !$card->nonfoil) ? true : false;
@@ -83,7 +88,7 @@ class EditionController extends Controller
                 $this->addCard($card, $foil);
             } //if exist
             else {
-                foreach ($localCards as $localCard) {
+                foreach ($n as $localCard) {
                     //if dont have image
                     if ($localCard->product->image == null) {
                         //\Debugbar::info($localCard->product->image);
@@ -159,7 +164,7 @@ echo $img_path;
 
         // if image with given name exists, just add to db and return
         if (file_exists(storage_path('app/public/' . $img_path))) {
-echo "image exists.";
+//\Debugbar::info($img_path);
             // saving path to DB
             \DB::table('images')->insert([
                 'alt' => $card->name,
