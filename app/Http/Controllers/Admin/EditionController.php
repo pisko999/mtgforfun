@@ -88,6 +88,8 @@ class EditionController extends Controller
                 $this->addCard($card, $foil);
             } //if exist
             else {
+                //\Debugbar::info($n);
+
                 foreach ($n as $localCard) {
                     //if dont have image
                     if ($localCard->product->image == null) {
