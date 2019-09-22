@@ -21,7 +21,7 @@ class EditionController extends Controller
 
     public function __construct(EditionRepositoryInterface $editionRepository,
                                 CardRepositoryInterface $cardRepository,
-RaritiesRepository $raritiesRepository)
+                                RaritiesRepository $raritiesRepository)
     {
         $this->editionRepository = $editionRepository;
         $this->cardRepository = $cardRepository;
@@ -48,10 +48,9 @@ RaritiesRepository $raritiesRepository)
         $this->edition = $edition;
 
         $set = json_decode(file_get_contents('https://api.scryfall.com/sets/' . $edition->sign));
-        try{
+        try {
             $this->addCards($set->search_uri, $edition);
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
 
         }
 
@@ -82,9 +81,8 @@ RaritiesRepository $raritiesRepository)
 
 
                 $this->addCard($card, $foil);
-            }
-            //if exist
-            else{
+            } //if exist
+            else {
                 foreach ($localCards as $localCard) {
                     //if dont have image
                     if ($localCard->product->image == null) {
@@ -161,7 +159,7 @@ RaritiesRepository $raritiesRepository)
 
         // if image with given name exists, just add to db and return
         if (file_exists(storage_path('app/public/' . $img_path))) {
-
+echo "image exists.";
             // saving path to DB
             \DB::table('images')->insert([
                 'alt' => $card->name,
@@ -186,16 +184,15 @@ RaritiesRepository $raritiesRepository)
             \Storage::makeDirectory("public/image/" . $this->edition->sign, 0755, true);
         }
 
-        if(!file_exists("app/public/". $img_path)) {
-            // some output (downloading images takes some time)
-            echo("getting image for " . $card->name . " from " . $this->edition->sign . "\n");
+        // some output (downloading images takes some time)
+        echo("getting image for " . $card->name . " from " . $this->edition->sign . "\n");
 
-            // downloading image
-            $contents = file_get_contents($url);
+        // downloading image
+        $contents = file_get_contents($url);
 
-            // saving image
-            file_put_contents(storage_path("app/public/" . $img_path), $contents);
-        }
+        // saving image
+        file_put_contents(storage_path("app/public/" . $img_path), $contents);
+
         // saving path to DB
         \DB::table('images')->insert([
             'alt' => $card->name,
