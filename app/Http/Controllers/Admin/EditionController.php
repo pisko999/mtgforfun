@@ -6,7 +6,6 @@ use App\Http\Requests\EditionGetRequest;
 use App\Repositories\CardRepositoryInterface;
 use App\Repositories\EditionRepositoryInterface;
 use App\Repositories\RaritiesRepository;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class EditionController extends Controller
@@ -28,6 +27,8 @@ RaritiesRepository $raritiesRepository)
         $this->cardRepository = $cardRepository;
         $this->raritiesRepository = $raritiesRepository;
         $this->rarities = $this->raritiesRepository->getRaritiesToShort();
+        $this->middleware('auth');
+        $this->middleware('admin');
 
     }
 
@@ -47,7 +48,12 @@ RaritiesRepository $raritiesRepository)
         $this->edition = $edition;
 
         $set = json_decode(file_get_contents('https://api.scryfall.com/sets/' . $edition->sign));
-        $this->addCards($set->search_uri, $edition);
+        try{
+            $this->addCards($set->search_uri, $edition);
+        }
+        catch (\Exception $e){
+
+        }
 
 
         $editions = $this->editionRepository->getArrayForSelect();
