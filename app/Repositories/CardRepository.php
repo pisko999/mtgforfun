@@ -93,6 +93,7 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
         $q = $this->model;
         $q = $this->searchByEdition($q, $edition_id);
         $q = $this->searchByName($q, $cardName);
+        $q = $this->joinData($q);
         return $q->get();
     }
 
