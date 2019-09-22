@@ -143,7 +143,7 @@ class EditionController extends Controller
                             '?')
                     ))) .
             ".jpg";
-//echo $img_path;
+echo $img_path;
         return $img_path;
     }
 
