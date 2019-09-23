@@ -110,7 +110,7 @@ $state = isset($stockItem->state) ? $states[$stockItem->state] : "";
         <tr>
             <td>{{$item->rarity !=null?$rarities[$item->rarity]:''}}</td>
             <td class="col-md-2">
-                price: {{ $price}}
+                <b>price: {{ $price}}</b>
             </td>
             <td>
                 @if($product->idProductMKM == null)
