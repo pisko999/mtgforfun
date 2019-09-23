@@ -29,11 +29,13 @@ class EditionStatisticController extends Controller
     {
         $edition = $this->editionRepository->getById($request->edition);
         $cards = $this->cardRepository->getCardsByEditionOnlyStockWithProductAndStockPaginate($request->edition);
-        $count = count($cards);
+        $count = 0;
         $price = 0;
         foreach ($cards as $card) {
-            foreach ($card->product->stock as $stock)
-                $price += $stock->price;
+            foreach ($card->product->stock as $stock) {
+                $price += $stock->price * $stock->quantity;
+                $count += $stock->quantity;
+            }
         }
 
         return view('admin.editionsStatisticPost', compact('edition', 'count', 'price'));
