@@ -43,7 +43,7 @@ $quantity =
 $price =
     (isset($stockItem->price) && ($stockItem->quantity > 0)) ?
         $stockItem->price :
-        $product->base_price;
+        $product->price->MT;
 
 $foil =
     isset($item->foil) && $item->foil == 1 ?

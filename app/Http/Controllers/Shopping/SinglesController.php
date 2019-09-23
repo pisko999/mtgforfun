@@ -47,6 +47,7 @@ class SinglesController extends Controller
 
 
         $selected->editionId = $edition_id;
+        $selected->onlyStock = true;
 
         $showingCards = 1;
 
