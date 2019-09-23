@@ -39,7 +39,7 @@
                                     @if($card->product->idProductMKM == null)
                                         <span>!! Not on MKM !!</span> <br/>
                                     @endif
-                                    <label>Price : <input type="text" name="price" id="price" value="{{$card->product->price->MT}}"></label><br/>
+                                    <label>Price : <input type="text" name="price" id="price" style="{{$card->product->price->MT > 25?($card->product->price->MT > 50? 'background-color: green':'background-color: red'):''}}" value="{{$card->product->price->MT}}"></label><br/>
                                     <label>Photo : <input type="file" name="photo"></label><br/>
                                     <label>State :
                                         <select name="state">

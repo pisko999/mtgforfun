@@ -94,6 +94,9 @@ class StockService
 
     public function decrease(Stock $stock, $quantity)
     {
+        if ($stock->quantity < $quantity)
+            $quantity = $stock->quantity;
+
         $stock->quantity -= $quantity;
         $stock->save();
 
