@@ -139,6 +139,12 @@ class EditionRepository extends ModelRepository implements EditionRepositoryInte
             ->orderBy('release_date', 'desc')
             ->get();
 
+        $funny = $this->model
+            ->select('id', 'name')
+            ->where('type', 'funny')
+            ->orderBy('release_date', 'desc')
+            ->get();
+
         $masterpieces = $this->model
             ->select('id', 'name')
             ->where('type', 'masterpiece')
@@ -171,6 +177,9 @@ class EditionRepository extends ModelRepository implements EditionRepositoryInte
         foreach ($master as $edition)
             $masterArray[$edition->id] = $edition->name;
 
+        foreach ($funny as $edition)
+            $funnyArray[$edition->id] = $edition->name;
+
         foreach ($masterpieces as $edition)
             $masterpiecesArray[$edition->id] = $edition->name;
 
@@ -186,6 +195,7 @@ class EditionRepository extends ModelRepository implements EditionRepositoryInte
         $selectArray["modern"] = $modernArray;
         $selectArray["legacy"] = $legacyArray;
         $selectArray["masters"] = $masterArray;
+        $selectArray["funny"] = $funnyArray;
         $selectArray["masterpieces"] = $masterpiecesArray;
         $selectArray["draft_inovations"] = $draft_inovationsArray;
         $selectArray["promos"] = $promosArray;
