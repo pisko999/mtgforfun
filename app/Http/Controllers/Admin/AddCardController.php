@@ -77,11 +77,12 @@ class AddCardController extends Controller
     {
         $nbrPerPage = 1;
         $cards = $this->cardRepository->getCardsByEditionPaginate($edition_id, $nbrPerPage, 'number', 'asc', $request->page);
+        if($request->quantity > 0) {
 
-        if (count($cards) == 0)
-            return abort(404);
-        $stock = $this->stockService->add($cards[0]->product, $request);
-
+            if (count($cards) == 0)
+                return abort(404);
+            $stock = $this->stockService->add($cards[0]->product, $request);
+        }
         if ($cards->nextPageUrl() != null)
             return redirect($cards->nextPageUrl());
         else
@@ -94,6 +95,7 @@ class AddCardController extends Controller
         if (count($product) == 0)
             return abort(404);
         $stock = $this->stockService->add($product, $request);
+
         return redirect()->back();
 
     }

@@ -78,7 +78,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    @for($i = 1;$i <=20; $i++)
+                                    @for($i = 0;$i <=20; $i++)
 
                                         <button type="submit" style="width: 50px; margin: 6px;"
                                                 onclick="{$('#quantity').val({{$i}});$('#form{{$card->id}}').submit();}">{{$i}}</button>
