@@ -51,7 +51,7 @@ class EditionController extends Controller
         try {
             $this->addCards($set->search_uri, $edition);
         } catch (\Exception $e) {
-
+            \Debugbar::info($e);
         }
 
 
@@ -88,12 +88,16 @@ class EditionController extends Controller
                 $this->addCard($card, $foil);
             } //if exist
             else {
-                //\Debugbar::info($n);
 
                 foreach ($n as $localCard) {
                     //if dont have image
+                    //\Debugbar::info($n);
+                    \Debugbar::info($localCard->product->image);
                     if ($localCard->product->image == null) {
-                        //\Debugbar::info($localCard->product->image);
+                        $this->addImage($card, $localCard->id);
+                    }
+                    elseif(!file_exists(storage_path($localCard->product->image->path))){
+                        $localCard->product->image()->delete();
                         $this->addImage($card, $localCard->id);
                     }
                 }
