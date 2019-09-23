@@ -63,7 +63,7 @@ class AddCardController extends Controller
     {
         $nbrPerPage = 1;
 
-        $cards = $this->cardRepository->getCardsByEditionPaginate($edition_id, $nbrPerPage, 'number', 'asc', $request->page);
+        $cards = $this->cardRepository->getCardsByEditionWithoutFoilPaginate($edition_id, $nbrPerPage, 'number', 'asc', $request->page);
 
         if (count($cards) == 0)
             return abort(404);

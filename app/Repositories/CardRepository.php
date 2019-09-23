@@ -80,6 +80,16 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
     public function getCardsByEditionPaginate($editionId, $n, $orderBy = "base_price", $orderByType = "desc", $page = 1, $foil = 0) // products.base_price desc
     {
         $q = $this->getCardsByEdition($editionId);
+        $q = $this->searchByFoil($q, $foil);
+        $q = $this->searchByLang($q,'en');
+        $q = $this->joinData($q);
+        return $q->orderBy($orderBy, $orderByType)
+            ->paginate($n, ['*'], 'page', $page);
+    }
+
+    public function getCardsByEditionWithoutFoilPaginate($editionId, $n, $orderBy = "base_price", $orderByType = "desc", $page = 1, $foil = 0) // products.base_price desc
+    {
+        $q = $this->getCardsByEdition($editionId);
         //$q = $this->searchByFoil($q, $foil);
         $q = $this->searchByLang($q,'en');
         $q = $this->joinData($q);
