@@ -124,4 +124,8 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
     Route::get('/admin/Edition', ['as' => 'admin.EditionCheckGet', 'uses' => 'Admin\EditionController@editionCheckGet']);
     Route::post('/admin/Edition', ['as' => 'admin.EditionCheckPost', 'uses' => 'Admin\EditionController@editionCheckPost']);
 
+    //edition statistics
+    Route::get('/admin/editionStatistics', ['as' => 'admin.editionsStatistic', 'uses' => 'Admin\EditionStatisticController@editionsSatatisticGet']);
+    Route::post('/admin/editionStatistics', ['as' => 'admin.editionsStatistic', 'uses' => 'Admin\EditionStatisticController@editionsStatisticPost']);
+
 });

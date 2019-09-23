@@ -106,6 +106,12 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
         return $q->orderBy($orderBy, $orderByType)
             ->paginate($n, ['*'], 'page', $page);
     }
+public function getCardsByEditionOnlyStockWithProductAndStockPaginate($editionId){
+    $q = $this->getCardsByEdition($editionId);
+    $q = $this->searchOnlyInStock($q);
+    $q = $this->joinDataSmall($q);
+    return $q->get();
+}
 
     private function getCardsByEdition($editionId) // products.base_price desc
     {
@@ -232,7 +238,12 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
 
         }
     }
-
+    private function joinDataSmall($q)
+    {
+        $q = $q->join('products', 'cards.id', '=', 'products.id')
+            ->with('product.stock');
+        return $q;
+    }
     private function joinData($q)
     {
         //jointure because ordering on collumn in products table

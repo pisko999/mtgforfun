@@ -32,4 +32,6 @@ interface CardRepositoryInterface
 
     public function getCardsSearchPaginate(CardSearchRequest $request, $nbrPerPage);
 
+    public function getCardsByEditionOnlyStockWithProductAndStockPaginate($editionId);
+
 }
