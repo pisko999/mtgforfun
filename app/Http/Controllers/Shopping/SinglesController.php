@@ -39,7 +39,7 @@ class SinglesController extends Controller
 
     public function showList(ShowListRequest $request, Search $search, SearchSelected $selected, $edition_id)
     {
-        $products = $this->cardRepository->getCardsByEditionPaginate($edition_id, $this->nbrPerPage, 'products.base_price', 'desc', $request->page);
+        $products = $this->cardRepository->getCardsByEditionOnlyStockPaginate($edition_id, $this->nbrPerPage, 'products.base_price', 'desc', $request->page);
 
         $links = $products->render();
 
@@ -47,7 +47,7 @@ class SinglesController extends Controller
 
 
         $selected->editionId = $edition_id;
-        $selected->onlyStock = true;
+        $selected->onlyStock = 1;
 
         $showingCards = 1;
 

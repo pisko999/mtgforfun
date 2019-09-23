@@ -18,6 +18,8 @@ interface CardRepositoryInterface
 {
     public function getCardsByEditionPaginate($editionId, $n, $orderBy = "base_price", $orderByType = "desc", $page = 1, $foil = 0);
 
+    public function getCardsByEditionOnlyStockPaginate($editionId, $n, $orderBy = "base_price", $orderByType = "desc", $page = 1, $foil = 0);
+
     public function getCardsByEditionWithoutFoilPaginate($editionId, $n, $orderBy = "base_price", $orderByType = "desc", $page = 1, $foil = 0);
 
     public function getCardByNameAndEdition($cardName, $edition_id);
