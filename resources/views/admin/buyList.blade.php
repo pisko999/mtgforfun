@@ -36,8 +36,10 @@
                                 <div class="card-header"><h2>{{$edition->name}}</h2></div>
 
                                 <div class="card-body">
+<?php $total = 0; ?>
+    <table>
 
-                                    @foreach ($edition->cards as $card)
+    @foreach ($edition->cards as $card)
                                         <?php
                                         $price = $card->product->base_price * .65;
                                         if($price > 20)
@@ -51,16 +53,17 @@
                                         elseif($price < 5)
                                             $price = 1;
 
+                                        $total += $price;
+
                                         $background = '';
 
-                                        if($card->rarity = 'M')
+                                        if($card->rarity == 'M')
                                             $background = 'red';
-                                        elseif($card->rarity = 'R')
+                                        elseif($card->rarity == 'R')
                                             $background = 'gold';
-                                        elseif($card->rarity = 'U')
+                                        elseif($card->rarity == 'U')
                                             $background = 'grey';
                                         ?>
-                                        <table>
                                             <tr>
                                                 <td style="width: 10%; text-align: center;">{{$card->number}}</td>
                                                 <td style="width: 75%; text-align: center; background: {{$background}}">{{$card->product->name}}</td>
@@ -68,8 +71,10 @@
                                                 <td style="width: 5%; text-align: center;">{{$price}}</td>
 
                                             </tr>
-                                        </table>
                                     @endforeach
+        <tr><td colspan="2"></td><td>Total :</td> <td>{{$total}}</td> </tr>
+    </table>
+
                                 </div>
                             </div>
                         @endforeach

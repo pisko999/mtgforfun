@@ -134,7 +134,7 @@
                     @endforeach
                     <hr/>
                     <li class="nav-item">
-                        <a href="{!! route('admin.getBuyList', ['edititon_id' => 2]) !!}">Get BuyList</a>
+                        <a href="{!! route('admin.getBuyList') !!}">Get BuyList</a>
                     </li>
                 </ul>
 
