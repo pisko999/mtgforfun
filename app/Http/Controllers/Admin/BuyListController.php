@@ -65,8 +65,14 @@ class BuyListController extends Controller
 
                 }
                 //add different for  common, uncommon, rare, mythic
-                if ($q < 4) {
-                    $card->quantity = 4 - $q;
+                $count = 4;
+                if($card->rarity == 'U')
+                    $count = 8;
+                elseif($card->rarity == 'C')
+                    $count = 16;
+
+                if ($q < $count) {
+                    $card->quantity = $count - $q;
                     array_push($e->cards, $card);
                 }
             }
