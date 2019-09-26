@@ -35,12 +35,14 @@ class MKMController extends Controller
 
         $mkm = new MKMService();
 
+        $answer=$mkm->getGames();
+
         //$answer = $conn->call("account");
-        //\Debugbar::info($answer);
+        \Debugbar::info("$answer");
         //$answer = $mkm->getSingles(1);
         //\Debugbar::info($answer->single[15]);
 
-        $answer = $mkm->getStock();
+        //$answer = $mkm->getStock();
         //$articles = $answer->article;
         //foreach ($articles as $article) {
         //    $mkm->decreaseStock($article->idArticle, $article->count);
