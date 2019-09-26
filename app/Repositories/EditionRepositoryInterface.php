@@ -37,5 +37,7 @@ interface EditionRepositoryInterface
 
     public function getStandartEditions();
 
+    public function getBuyListEditions();
+
     public function getArrayForSelect();
 }

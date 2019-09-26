@@ -102,7 +102,7 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
 
 
     //get buy list route
-    Route::get('/admin/getBuyList/{edition_id?}', ['as' => 'admin.getBuyList', 'uses' => 'Admin\BuyListController@getBuyList']);
+    Route::get('/getBuyList/{edition_id?}', ['as' => 'admin.getBuyList', 'uses' => 'Admin\BuyListController@getBuyList']);
 
     //commands routes
     Route::get('/admin/commands', ['as' => 'admin.commands', 'uses' => 'Admin\CommandController@commands']);

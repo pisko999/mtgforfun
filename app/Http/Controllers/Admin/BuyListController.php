@@ -24,13 +24,11 @@ class BuyListController extends Controller
     {
         $this->editionRepository = $editionRepository;
         $this->cardRepository = $cardRepository;
-        $this->middleware('auth');
-        $this->middleware('admin');
     }
 
     public function getBuyList($edition_id = null)
     {
-        $standartEditions = $this->editionRepository->getStandartEditions();
+        $standartEditions = $this->editionRepository->getBuyListEditions();
 
         $editions = array();
         foreach ($standartEditions as $edition) {
@@ -45,18 +43,18 @@ class BuyListController extends Controller
             foreach ($cards as $card) {
                 if($card->foil)
                     continue;
-                /*
+
                 if (
-                    ($card->edition_id == 2 && $card->number >= 250) ||
-                    ($card->edition_id == 3 && $card->number >= 255) ||
-                    ($card->edition_id == 5 && $card->number >= 255) ||
-                    ($card->edition_id == 6 && $card->number >= 261) //||
-                    //($card->edition_id == 7 && $card->number >= 250) ||
+                    ($card->edition_id == 299 && $card->number >= 261) ||
+                    ($card->edition_id == 295 && $card->number >= 250) ||
+                    ($card->edition_id == 291 && $card->number >= 260) ||
+                    ($card->edition_id == 285 && $card->number >= 260) //||
+                    //($card->edition_id == 281 && $card->number >= 250) ||
                     //($card->edition_id == 9 && $card->number >= 250) ||
                     //($card->edition_id == 11 && $card->number >= 250)
                 )
                     continue;
-                */
+
 
                 $s = $card->product->stock;
                 //var_dump($s);

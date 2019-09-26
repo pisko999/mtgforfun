@@ -107,6 +107,18 @@ class EditionRepository extends ModelRepository implements EditionRepositoryInte
             ->get();
     }
 
+    public function getBuyListEditions()
+    {
+        $standart_types = array("core", "expansion");
+
+        return $this->model
+            ->select('id', 'name')
+            ->where('release_date', '>', date("Y") - 1 . "-09-01")
+            ->whereIn('type', $standart_types)
+            ->orderBy('release_date', 'desc')
+            ->get();
+    }
+
     public function getArrayForSelect()
     {
         $modern_types = array("core", "expansion");

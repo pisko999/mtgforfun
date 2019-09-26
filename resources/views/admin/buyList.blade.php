@@ -38,12 +38,25 @@
                                 <div class="card-body">
 
                                     @foreach ($edition->cards as $card)
+                                        <?php
+                                        $price = $card->product->base_price * .65;
+                                        if($price > 20)
+                                            $price = (floor($price/10)*10)-1;
+                                        elseif($price > 15)
+                                            $price = 15;
+                                        elseif($price > 10)
+                                            $price = 9;
+                                        elseif($price > 5)
+                                            $price = 5;
+                                        elseif($price < 5)
+                                            $price = 1;
+                                        ?>
                                         <table>
                                             <tr>
                                                 <td style="width: 10%; text-align: center;">{{$card->number}}</td>
                                                 <td style="width: 75%; text-align: center;">{{$card->product->name}}</td>
                                                 <td style="width: 1%; text-align: center;">{{$card->quantity}}</td>
-                                                <td style="width: 5%; text-align: center;">{{$card->product->base_price * .65}}</td>
+                                                <td style="width: 5%; text-align: center;">{{$price}}</td>
 
                                             </tr>
                                         </table>

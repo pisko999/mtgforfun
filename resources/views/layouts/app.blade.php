@@ -132,6 +132,10 @@
                             </a>
                         </li>
                     @endforeach
+                    <hr/>
+                    <li class="nav-item">
+                        <a href="{!! route('admin.getBuyList', ['edititon_id' => 2]) !!}">Get BuyList</a>
+                    </li>
                 </ul>
 
             </div>
@@ -178,10 +182,6 @@
                         </li>
                         <li class="nav-item">
                             <a href="{!! route('admin.editionsStatistic') !!}">editions statistic</a>
-                        </li>
-                        <hr/>
-                        <li class="nav-item">
-                            <a href="{!! route('admin.getBuyList', ['edititon_id' => 2]) !!}">Get BuyList</a>
                         </li>
                         <hr/>
                         <li class="nav-item">
