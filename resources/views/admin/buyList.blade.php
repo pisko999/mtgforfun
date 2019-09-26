@@ -43,7 +43,7 @@
                                                 <td style="width: 10%; text-align: center;">{{$card->number}}</td>
                                                 <td style="width: 75%; text-align: center;">{{$card->product->name}}</td>
                                                 <td style="width: 1%; text-align: center;">{{$card->quantity}}</td>
-                                                <td style="width: 5%; text-align: center;">{{$card->product->base_price}}</td>
+                                                <td style="width: 5%; text-align: center;">{{$card->product->base_price * .65}}</td>
 
                                             </tr>
                                         </table>
