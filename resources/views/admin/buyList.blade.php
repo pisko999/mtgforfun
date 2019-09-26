@@ -53,7 +53,7 @@
                                             elseif ($price < 5)
                                                 $price = 1;
 
-                                            $total += $price;
+                                            $total += $price * $card->quantity;
 
                                             $background = '';
 
@@ -74,7 +74,7 @@
                                         @endforeach
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td>Total :</td>
+                                            <td>Total</td>
                                             <td>{{$total}}</td>
                                         </tr>
                                     </table>
