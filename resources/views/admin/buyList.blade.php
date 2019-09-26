@@ -42,8 +42,8 @@
                                             <tr>
                                                 <td style="width: 10%; text-align: center;">{{$card->number}}</td>
                                                 <td style="width: 80%; text-align: center;">{{$card->product->name}}</td>
-                                                <td style="width: 1%; text-align: center;">{{$card->quantity}}</td>
-                                                <td style="width: 1%; text-align: center;">{{count($card->product->stock) > 0?$card->product->stock->price:$card->product->price->MT}}</td>
+                                                <td style="width: 5%; text-align: center;">{{$card->quantity}}</td>
+                                                <td style="width: 5%; text-align: center;">{{count($card->product->stock) > 0?$card->product->stock->price:$card->product->base_price}}</td>
 
                                             </tr>
                                         </table>
