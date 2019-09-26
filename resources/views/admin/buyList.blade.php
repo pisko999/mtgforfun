@@ -36,34 +36,34 @@
                                 <div class="card-header"><h2>{{$edition->name}}</h2></div>
 
                                 <div class="card-body">
-<?php $total = 0; ?>
-    <table>
+                                    <?php $total = 0; ?>
+                                    <table>
 
-    @foreach ($edition->cards as $card)
-                                        <?php
-                                        $price = $card->product->base_price * .65;
-                                        if($price > 20)
-                                            $price = (floor($price/10)*10)-1;
-                                        elseif($price > 15)
-                                            $price = 15;
-                                        elseif($price > 10)
-                                            $price = 9;
-                                        elseif($price > 5)
-                                            $price = 5;
-                                        elseif($price < 5)
-                                            $price = 1;
+                                        @foreach ($edition->cards as $card)
+                                            <?php
+                                            $price = $card->product->base_price * .65;
+                                            if ($price > 20)
+                                                $price = (floor($price / 10) * 10) - 1;
+                                            elseif ($price > 15)
+                                                $price = 15;
+                                            elseif ($price > 10)
+                                                $price = 9;
+                                            elseif ($price > 5)
+                                                $price = 5;
+                                            elseif ($price < 5)
+                                                $price = 1;
 
-                                        $total += $price;
+                                            $total += $price;
 
-                                        $background = '';
+                                            $background = '';
 
-                                        if($card->rarity == 'M')
-                                            $background = 'red';
-                                        elseif($card->rarity == 'R')
-                                            $background = 'gold';
-                                        elseif($card->rarity == 'U')
-                                            $background = 'grey';
-                                        ?>
+                                            if ($card->rarity == 'M')
+                                                $background = 'red';
+                                            elseif ($card->rarity == 'R')
+                                                $background = 'gold';
+                                            elseif ($card->rarity == 'U')
+                                                $background = 'grey';
+                                            ?>
                                             <tr>
                                                 <td style="width: 10%; text-align: center;">{{$card->number}}</td>
                                                 <td style="width: 75%; text-align: center; background: {{$background}}">{{$card->product->name}}</td>
@@ -71,9 +71,13 @@
                                                 <td style="width: 5%; text-align: center;">{{$price}}</td>
 
                                             </tr>
-                                    @endforeach
-        <tr><td colspan="2"></td><td>Total :</td> <td>{{$total}}</td> </tr>
-    </table>
+                                        @endforeach
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td>Total :</td>
+                                            <td>{{$total}}</td>
+                                        </tr>
+                                    </table>
 
                                 </div>
                             </div>
