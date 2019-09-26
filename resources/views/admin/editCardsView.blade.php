@@ -50,6 +50,15 @@
                                     $stocks = $card->product->stock;
                                 do{
                                     $stock = isset($stocks[$j])?$stocks[$j]: null;
+
+                                $background = '';
+
+                                if($card->rarity == 'M')
+                                    $background = 'red';
+                                elseif($card->rarity == 'R')
+                                    $background = 'gold';
+                                elseif($card->rarity == 'U')
+                                    $background = 'lightgrey';
                                 ?>
                                 <tr>
                                     <input type="text" name="stock{{$i}}" id="stock{{$i}}" value="{{$stock != null ? $stock->id : ''}}" hidden>
@@ -61,7 +70,7 @@
                                         {{$card->number}}
                                     </td>
                                     <td>
-                                        <label>{{$card->product->name}}</label>
+                                        <label style="background: {{$background}}">{{$card->product->name}}</label>
                                     </td>
                                     <td>
                                         <input type="text" name="price{{$i}}" id="price{{$i}}"
