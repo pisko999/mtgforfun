@@ -41,7 +41,7 @@ class AddBoosterController extends Controller
             return abort(404);
         $booster = $this->boosterRepository->getByIdWithProduct($id);
 
-        if (count($booster) == 0)
+        if ($booster == null)
             return abort(404);
 //return var_dump($booster->product->image);
         return view('admin.addBoosterView', compact('booster'));
@@ -53,10 +53,10 @@ class AddBoosterController extends Controller
             return abort(404);
         $booster = $this->boosterRepository->getByIdWithProduct($id);
 
-        if (count($booster) == 0)
+        if ($booster == null)
             return abort(404);
         $this->stockRepository->addItem($booster->product, $request);
-        //return view('home');
+        return view('home');
         return $this->addBoosterSelect();
     }
 }
