@@ -27,9 +27,9 @@
                             $image_path =
                                 isset($s->image) && $s->image != null ?
                                     $s->image->path :
-                                    $p->image != null ?
+                                    ($p->image != null ?
                                         $p->image->path :
-                                        "";
+                                        "");
                             $quantity =
                                 isset($s->quantity) ?
                                     $s->quantity :

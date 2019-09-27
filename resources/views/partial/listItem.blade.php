@@ -31,9 +31,9 @@ if (isset($stock[$i]))
 $image_path =
     isset($stockItem->image) && $stockItem->image != null ?
         $stockItem->image->path :
-        $product->image != null ?
+        ($product->image != null ?
             $product->image->path :
-            "";
+            "");
 
 $quantity =
     isset($stockItem->quantity) ?

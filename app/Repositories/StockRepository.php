@@ -9,6 +9,8 @@
 namespace App\Repositories;
 
 use App\Http\Requests\StockAddRequest;
+use App\Models\Image;
+use App\Models\Image_stock;
 use App\Models\Stock;
 use App\Models\Product;
 use App\Services\MKMService;
@@ -47,11 +49,12 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
             return;
         $stock = $this->model->where('product_id', $product->id)->get();
         //trying to add to exists
+        \Debugbar::info($stock);
+
         foreach ($stock as $s) {
 
             $ret = $this->addItemToExists($s, $request);
             if ($ret != false) {
-                //\Debugbar::info($ret);
                 return $ret;
             }
         }
@@ -84,6 +87,19 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
         ]);
 
         $item->save();
+\Debugbar::info($request->image);
+        if ($request->image != null) {
+            $fileName = $item->id . '.' . $request->image->getClientOriginalExtension();
+            //var_dump($categoryRepository->getById($request->category));
+            $storagePath = 'image/stock';
+            $path = $request->image->storeAs('public/' . $storagePath, $fileName);
+            \Debugbar::info( $path);
+            $image = new Image_stock([
+                'path' => $storagePath .'/' . $fileName,
+                'alt' => $product->name,
+            ]);
+            $item->image()->save($image);
+        }
         return $item;
     }
 

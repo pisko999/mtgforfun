@@ -13,7 +13,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        {!! Form::open(['id' => 'form'.$booster->id]) !!}
+                        {!! Form::open(['id' => 'form'.$booster->id, 'enctype'=>'multipart/form-data']) !!}
                         <input type="text" name="id" value="{{$booster->id}}" hidden>
 
                         <table width="100%">
@@ -47,7 +47,7 @@
 
                                 </td>
                                 <td>
-                                    <label>Photo : <input type="file" name="photo"></label>
+                                    <label>Image : <input type="file" name="image"></label>
                                 </td>
                                 <td>
                                     <label>State :
@@ -70,12 +70,13 @@
                                     <script>
                                         $().ready(function() {
                                                 $("#quantity").keydown(function (event) {
-                                                        if (event.which == 13) {
+                                                    if (event.which == 13) {
                                                             $('#form{{$booster->id}}').submit();
 
                                                         }
                                                     }
                                                 );
+
                                                 $("#quantity").focus();
                                             }
                                         )
@@ -84,6 +85,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
+                                    <button type="submit" onclick="$('#quantity').val(0);" hidden></button>
                                     @for($i = 1;$i <=20; $i++)
 
                                         <button type="submit" style="width: 50px; margin: 6px;" onclick="$('#quantity').val({{$i}});">{{$i}}</button>

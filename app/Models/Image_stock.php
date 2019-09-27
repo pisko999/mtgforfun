@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Image_stock extends Model
 {
     protected $fillable = ['path', 'alt'];
+    public $timestamps = false;
 
     public function stock()
     {

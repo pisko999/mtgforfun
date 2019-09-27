@@ -123,6 +123,7 @@
                             {{Form::close()}}
                         </div>
                     </li>
+                    <hr/>
                     @foreach($navbarItems as $navbarItem)
                         <li class="nav-item">
                             <a href="{!! route('shopping.category', ['category'=>$navbarItem->getCategory()])  !!}">
