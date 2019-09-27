@@ -49,7 +49,7 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
             return;
         $stock = $this->model->where('product_id', $product->id)->get();
         //trying to add to exists
-        \Debugbar::info($stock);
+        //\Debugbar::info($stock);
 
         foreach ($stock as $s) {
 
@@ -87,7 +87,7 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
         ]);
 
         $item->save();
-\Debugbar::info($request->image);
+//\Debugbar::info($request->image);
         if ($request->image != null) {
             $fileName = $item->id . '.' . $request->image->getClientOriginalExtension();
             //var_dump($categoryRepository->getById($request->category));

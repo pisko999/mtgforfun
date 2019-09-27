@@ -85,10 +85,9 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <button type="submit" onclick="$('#quantity').val(0);" hidden></button>
                                     @for($i = 1;$i <=20; $i++)
 
-                                        <button type="submit" style="width: 50px; margin: 6px;" onclick="$('#quantity').val({{$i}});">{{$i}}</button>
+                                        <button type="button" style="width: 50px; margin: 6px;" onclick="$('#quantity').val({{$i}});$('#form{{$booster->id}}').submit();">{{$i}}</button>
                                         @if($i == 10)
                                             <br />
                                         @endif

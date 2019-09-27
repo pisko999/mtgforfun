@@ -56,7 +56,7 @@ class AddBoosterController extends Controller
         if ($booster == null)
             return abort(404);
         $this->stockRepository->addItem($booster->product, $request);
-        return view('home');
+        //return view('home');
         return $this->addBoosterSelect();
     }
 }
