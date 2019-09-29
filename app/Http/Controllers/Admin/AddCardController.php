@@ -92,7 +92,7 @@ class AddCardController extends Controller
     public function addCardSinglePost(StockAddRequest $request)
     {
         $product = $this->productRepository->getById($request->id);
-        if (count($product) == 0)
+        if ($product == null)
             return abort(404);
         $stock = $this->stockService->add($product, $request);
 
