@@ -57,6 +57,7 @@ class SinglesController extends Controller
 
     public function search(SearchRequest $request, Search $search, SearchSelected $selected)
     {
+        //return view('home');
         if (isset($request->searchTextHidden))
             $request->searchedText = $request->searchTextHidden;
 
@@ -88,7 +89,7 @@ class SinglesController extends Controller
 
         $showingCards = 1;
 
-        return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards'));
+        //return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards'));
 
     }
 
