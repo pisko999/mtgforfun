@@ -24,7 +24,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'searchTextHidden' => ['alpha', 'max:255'],
+            'searchTextHidden' => ['string', 'max:255'],
 
         ];
     }
