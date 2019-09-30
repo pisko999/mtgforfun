@@ -98,7 +98,7 @@ $state = isset($stockItem->state) ? $states[$stockItem->state] : "";
         </tr>
         <tr>
             <td>{{$item->edition != null?$item->edition->name:''}}</td>
-            <td>{{$foil}} {{$state}}</td>
+            <td>{{$foil}} {{$state}} {{$item->number}}</td>
             <td>
                 @if($item instanceof \App\Models\Card)
                     @foreach($item->colors as $color)

@@ -74,9 +74,9 @@ class EditionController extends Controller
 //\Debugbar::info($localCards[0]);
         // adding each card
         foreach ($cards as $card) {
-            //\Debugbar::info();
+            //\Debugbar::info($card);
             //if card dont exist
-            $n = $localCards->filter( function ($e) use ($card){return $e->product->name == $card->name;});
+            $n = $localCards->filter( function ($e) use ($card){return $e->product->name == $card->name && $e->number == $card->collector_number;});
             //\Debugbar::info($n);
 
             if($n->count() == 0){
@@ -92,7 +92,7 @@ class EditionController extends Controller
                 foreach ($n as $localCard) {
                     //if dont have image
                     //\Debugbar::info($n);
-                    \Debugbar::info($localCard->product->image);
+                    //\Debugbar::info($localCard->product->image);
                     if ($localCard->product->image == null) {
                         $this->addImage($card, $localCard->id);
                     }
@@ -142,6 +142,10 @@ class EditionController extends Controller
      */
     private function getImagePath($card)
     {
+        $name = $card->name;
+        if($card->set == "eld" && $card->collector_number > 269)
+            $name .=  "-" . $card->collector_number;
+
         $img_path =
             "image/" .
             $this->edition->sign .
@@ -150,7 +154,7 @@ class EditionController extends Controller
                 str_replace('"', '',
                     preg_replace('/\s/', '',
                         strtok(
-                            strtok($card->name, '//'),
+                            strtok($name, '//'),
                             '?')
                     ))) .
             ".jpg";
