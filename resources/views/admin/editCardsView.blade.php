@@ -49,23 +49,30 @@
                                 if ($card->product != null && count($card->product->stock) != 0)
                                     $stocks = $card->product->stock;
                                 do{
-                                    $stock = isset($stocks[$j])?$stocks[$j]: null;
+                                $stock = isset($stocks[$j]) ? $stocks[$j] : null;
 
                                 $background = '';
 
-                                if($card->rarity == 'M')
+                                if ($card->rarity == 'M')
                                     $background = 'red';
-                                elseif($card->rarity == 'R')
+                                elseif ($card->rarity == 'R')
                                     $background = 'gold';
-                                elseif($card->rarity == 'U')
+                                elseif ($card->rarity == 'U')
                                     $background = 'lightgrey';
+                                $price = $stock != null && $stock->quantity > 0 ? $stock->price : $card->product->price->MT;
+                                $price = $price < 4 ? 4 : $price;
                                 ?>
                                 <tr>
-                                    <input type="text" name="stock{{$i}}" id="stock{{$i}}" value="{{$stock != null ? $stock->id : ''}}" hidden>
+                                    <input type="text" name="stock{{$i}}" id="stock{{$i}}"
+                                           value="{{$stock != null ? $stock->id : ''}}" hidden>
                                     <input type="text" name="id{{$i}}" id="id{{$i}}" value="{{$card->id}}" hidden>
-                                    <input type="text" name="origQuantity{{$i}}" id="origQuantity{{$i}}" value="{{$stock != null?$stock->quantity:0}}" hidden>
-                                    <input type="text" name="origState{{$i}}" id="origState{{$i}}" value="{{$stock != null && $stock->quantity > 0 ? $stock->state:'MT'}}" hidden>
-                                    <input type="text" name="origPrice{{$i}}" id="origPrice{{$i}}" value="{{$stock != null && $stock->quantity > 0 ? $stock->price:$card->product->price->MT}}" hidden>
+                                    <input type="text" name="origQuantity{{$i}}" id="origQuantity{{$i}}"
+                                           value="{{$stock != null?$stock->quantity:0}}" hidden>
+                                    <input type="text" name="origState{{$i}}" id="origState{{$i}}"
+                                           value="{{$stock != null && $stock->quantity > 0 ? $stock->state:'MT'}}"
+                                           hidden>
+                                    <input type="text" name="origPrice{{$i}}" id="origPrice{{$i}}" value="{{$price}}"
+                                           hidden>
                                     <td>
                                         {{$card->number}}
                                     </td>
@@ -74,7 +81,7 @@
                                     </td>
                                     <td>
                                         <input type="text" name="price{{$i}}" id="price{{$i}}"
-                                               value="{{$stock != null && $stock->quantity > 0 ?$stock->price:$card->product->price->MT}}">
+                                               value="{{$price}}">
                                     </td>
                                     <td>
                                         <select name="state{{$i}}" id="state{{$i}}">
@@ -86,21 +93,21 @@
                                             <option value="PL">PL</option>
                                             <option value="PO">PO</option>
                                         </select>
-@if(isset($stock))
-                                        <script>
-                                            $().ready(function () {
-                                                $("#state{{$i}}").val('{{$stock->quantity != 0 ? $stock->state: 'MT'}}');
-                                            });
-                                        </script>
-@endif                                    </td>
+                                        @if(isset($stock))
+                                            <script>
+                                                $().ready(function () {
+                                                    $("#state{{$i}}").val('{{$stock->quantity != 0 ? $stock->state: 'MT'}}');
+                                                });
+                                            </script>
+                                        @endif                                    </td>
                                     <td>
                                         <input type="text" name="quantity{{$i}}" id="quantity{{$i}}"
                                                value="{{$stock != null?$stock->quantity:0}}" autofocus>
                                     </td>
                                 </tr>
                                 <?php
-                                    $i++;
-                                    $j++;
+                                $i++;
+                                $j++;
                                 }while(isset($stocks[$j]));
                                 ?>
                             @endforeach
