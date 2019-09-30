@@ -143,7 +143,7 @@ class EditionController extends Controller
     private function getImagePath($card)
     {
         $name = $card->name;
-        if($card->set == "eld" && $card->collector_number > 269)
+        if($card->set == "eld" && $card->collector_number > 249)
             $name .=  "-" . $card->collector_number;
 
         $img_path =
