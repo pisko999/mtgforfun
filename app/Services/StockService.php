@@ -23,6 +23,7 @@ class StockService
     public function add($product, $data)
     {
         $stock = $this->stockRepository->addItem($product, $data);
+
         if ($this->MKM)
             if ($product->idProductMKM != null) {
                 if ($stock->idArticleMKM != null) {

@@ -88,7 +88,7 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
 
         $item->save();
 //\Debugbar::info($request->image);
-        if ($request->image != null) {
+        if (isset($request->image) && $request->image != null) {
             $fileName = $item->id . '.' . $request->image->getClientOriginalExtension();
             //var_dump($categoryRepository->getById($request->category));
             $storagePath = 'image/stock';
