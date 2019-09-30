@@ -182,6 +182,9 @@
                             <a href="{!! route('admin.EditionCheckGet') !!}">check edition</a>
                         </li>
                         <li class="nav-item">
+                            <a href="{!! route('admin.EditionRemoveGet') !!}">remove edition</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{!! route('admin.editionsStatistic') !!}">editions statistic</a>
                         </li>
                         <hr/>

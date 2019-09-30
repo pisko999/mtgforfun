@@ -124,6 +124,10 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
     Route::get('/admin/Edition', ['as' => 'admin.EditionCheckGet', 'uses' => 'Admin\EditionController@editionCheckGet']);
     Route::post('/admin/Edition', ['as' => 'admin.EditionCheckPost', 'uses' => 'Admin\EditionController@editionCheckPost']);
 
+    //remove edition
+    Route::get('/admin/EditionRemove', ['as' => 'admin.EditionRemoveGet', 'uses' => 'Admin\EditionController@editionRemoveGet']);
+    Route::post('/admin/EditionRemove', ['as' => 'admin.EditionRemovePost', 'uses' => 'Admin\EditionController@editionRemovePost']);
+
     //edition statistics
     Route::get('/admin/editionStatistics', ['as' => 'admin.editionsStatistic', 'uses' => 'Admin\EditionStatisticController@editionsSatatisticGet']);
     Route::post('/admin/editionStatistics', ['as' => 'admin.editionsStatistic', 'uses' => 'Admin\EditionStatisticController@editionsStatisticPost']);

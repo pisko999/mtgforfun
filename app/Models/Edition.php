@@ -17,7 +17,7 @@ class Edition extends Model
 
     public function booster_boxes()
     {
-        return $this->hasOne('App\Models\Booster_Box');
+        return $this->hasOne('App\Models\BoosterBox');
     }
 
     public function cards()

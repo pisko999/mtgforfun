@@ -8,7 +8,7 @@
                     <div class="card-header">Dashboard</div>
 
                     <div class="card-body">
-                        {{Form::open(['method'=>'POST', 'route'=>'admin.EditionCheckPost'])}}
+                        {{Form::open(['method'=>'POST', 'route'=>$r])}}
 
                         {{ Form::select('edition', $editions) }}
 

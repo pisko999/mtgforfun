@@ -35,8 +35,8 @@ class EditionController extends Controller
     public function editionCheckGet()
     {
         $editions = $this->editionRepository->getArrayForSelect();
-
-        return view('admin.editionGet', compact('editions'));
+        $r = 'admin.EditionCheckPost';
+        return view('admin.editionGet', compact('editions', 'r'));
     }
 
     public function editionCheckPost(EditionGetRequest $request)
@@ -76,10 +76,12 @@ class EditionController extends Controller
         foreach ($cards as $card) {
             //\Debugbar::info($card);
             //if card dont exist
-            $n = $localCards->filter( function ($e) use ($card){return $e->product->name == $card->name && $e->number == $card->collector_number;});
+            $n = $localCards->filter(function ($e) use ($card) {
+                return $e->product->name == $card->name && $e->number == $card->collector_number;
+            });
             //\Debugbar::info($n);
 
-            if($n->count() == 0){
+            if ($n->count() == 0) {
 
                 //if card exist only in foil version, we add directly foil card
                 $foil = ($card->foil && !$card->nonfoil) ? true : false;
@@ -95,8 +97,7 @@ class EditionController extends Controller
                     //\Debugbar::info($localCard->product->image);
                     if ($localCard->product->image == null) {
                         $this->addImage($card, $localCard->id);
-                    }
-                    elseif(!file_exists(storage_path($localCard->product->image->path))){
+                    } elseif (!file_exists(storage_path($localCard->product->image->path))) {
                         $localCard->product->image()->delete();
                         $this->addImage($card, $localCard->id);
                     }
@@ -143,8 +144,8 @@ class EditionController extends Controller
     private function getImagePath($card)
     {
         $num = '';
-        if($card->set == "eld" && $card->collector_number > 249)
-            $num .=  "-" . $card->collector_number;
+        if ($card->set == "eld" && $card->collector_number > 249)
+            $num .= "-" . $card->collector_number;
 
         $img_path =
             "image/" .
@@ -159,7 +160,7 @@ class EditionController extends Controller
                     ))) .
             $num .
             ".jpg";
-echo $img_path;
+        echo $img_path;
         return $img_path;
     }
 
@@ -340,5 +341,64 @@ echo $img_path;
         if (!$foil && $card->foil)
             // recursively calling to add foil one
             $this->addCard($card, true);
+    }
+
+    public function editionRemoveGet()
+    {
+        $editions = $this->editionRepository->getArrayForSelect();
+        $r = 'admin.EditionRemovePost';
+        return view('admin.editionGet', compact('editions', 'r'));
+    }
+
+    public function editionRemovePost(EditionGetRequest $request)
+    {
+
+        $edition = $this->editionRepository->getById($request->edition);
+        if ($edition == null)
+            return abort(404);
+       // try {
+        foreach ($edition->cards as $card) {
+            if ($card->product->stock->count() > 0) {
+                if ($card->product->stock->items->count() > 0)
+                    foreach ($card->product->stock->items as $item)
+                        $item->delete();
+
+                if ($card->product->stock->image != null)
+                    $card->product->stock->image->delete();
+
+                $card->product->stock->delete();
+            }
+
+            if ($card->product->image != null) {
+                \Debugbar::info($card->product->image);
+                $card->product->image()->delete();
+            }
+
+            if ($card->product->price != null)
+                $card->product->price()->delete();
+
+            $p = $card->product;
+
+            $card->colors()->detach();
+            $card->subtypes()->detach();
+            $card->types()->detach();
+            $card->creature()->delete();
+            $card->planeswalker()->delete();
+            $card->delete();
+            $p->delete();
+
+        }
+
+        if ($edition->boosters->count() > 0)
+            foreach ($edition->booster as $b)
+                $b->delete();
+
+        if ($edition->booster_boxes != null)
+
+                $edition->booster_boxes->delete();
+
+        $edition->delete();
+        //}        catch (\Exception $e){}
+        return $this->editionRemoveGet();
     }
 }
