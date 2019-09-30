@@ -142,9 +142,9 @@ class EditionController extends Controller
      */
     private function getImagePath($card)
     {
-        $name = $card->name;
+        $num = '';
         if($card->set == "eld" && $card->collector_number > 249)
-            $name .=  "-" . $card->collector_number;
+            $num .=  "-" . $card->collector_number;
 
         $img_path =
             "image/" .
@@ -154,9 +154,10 @@ class EditionController extends Controller
                 str_replace('"', '',
                     preg_replace('/\s/', '',
                         strtok(
-                            strtok($name, '//'),
+                            strtok($card->name, '//'),
                             '?')
                     ))) .
+            $num .
             ".jpg";
 echo $img_path;
         return $img_path;
