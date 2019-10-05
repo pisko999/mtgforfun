@@ -32,8 +32,6 @@ class BuyListController extends Controller
 
         $editions = array();
         foreach ($standartEditions as $edition) {
-            if($edition->id == 303)
-                continue;
             $e = new ed();
             $e->name = $this->editionRepository->getById($edition->id)->name;
             $e->cards = array();
