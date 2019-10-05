@@ -44,6 +44,7 @@ class BuyListController extends Controller
 
                 if (
                     ($card->edition_id == 299 && $card->number >= 261) ||
+                    ($card->edition_id == 303 && $card->number >= 250) ||
                     ($card->edition_id == 295 && $card->number >= 250) ||
                     ($card->edition_id == 291 && $card->number >= 260) ||
                     ($card->edition_id == 285 && $card->number >= 260) //||
