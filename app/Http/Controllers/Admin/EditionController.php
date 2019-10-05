@@ -56,8 +56,9 @@ class EditionController extends Controller
 
 
         $editions = $this->editionRepository->getArrayForSelect();
+        $r = 'admin.EditionCheckPost';
 
-        return view('admin.editionGet', compact('editions'));
+        return view('admin.editionGet', compact('editions', 'r'));
     }
 
     private function addCards($url)
@@ -77,7 +78,7 @@ class EditionController extends Controller
             //\Debugbar::info($card);
             //if card dont exist
             $n = $localCards->filter(function ($e) use ($card) {
-                return $e->product->name == $card->name && $e->number == $card->collector_number;
+                return $e->product->name == $card->name && $e->number == $card->collector_number && $e->product->lang == $card->lang;
             });
             //\Debugbar::info($n);
 
@@ -146,6 +147,10 @@ class EditionController extends Controller
         $num = '';
         if ($card->set == "eld" && $card->collector_number > 249)
             $num .= "-" . $card->collector_number;
+        $lang = '';
+        echo $card->lang;
+        if ($card->lang != "en")
+            $lang .= "-" . $card->lang;
 
         $img_path =
             "image/" .
@@ -159,8 +164,9 @@ class EditionController extends Controller
                             '?')
                     ))) .
             $num .
+            $lang .
             ".jpg";
-        echo $img_path;
+        //echo $img_path;
         return $img_path;
     }
 

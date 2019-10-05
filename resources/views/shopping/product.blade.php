@@ -16,6 +16,7 @@
                         @endif
                         <div>
                             <?php
+                            \Debugbar::info($product);
                             $p = $product->product;
                             $st = $p->stock->all();
 
@@ -37,10 +38,10 @@
                             $price =
                                 isset($s->price) ?
                                     $s->price :
-                                    $p->base_price;
+                                    $p->price->MT;
                             $foil =
                                 isset($s->foil) ?
-                                    'foil':
+                                    'foil' :
                                     '';
 
                             //  var_dump($s);
@@ -56,7 +57,7 @@
 
                                         </td>
                                         <td colspan="1" class="col-md-4" style="text-align: left">
-                                                {{$p->name}}
+                                            {{$p->name . ((isset($p->lang) && ($p->lang != 'en'))? (' - ' . $p->lang ): '')}}
                                         </td>
                                         <td class="col-md-3">
                                             quantity: {{ $quantity}}
@@ -91,12 +92,12 @@
                                         <td>{{$foil}}</td>
                                         <td>
                                             @if(count($prints)>0)
-                                            <select>
-                                                @foreach($prints as $print)
-                                                    <option value="{{$print->id}}">{{$print->name}}</option>
+                                                <select>
+                                                    @foreach($prints as $print)
+                                                        <option value="{{$print->id}}">{{$print->name}}</option>
                                                     @endforeach
-                                            </select>
-                                                @endif
+                                                </select>
+                                            @endif
                                         </td>
 
                                     </tr>

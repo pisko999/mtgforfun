@@ -24,13 +24,13 @@
                                 Name
                             </td>
                             <td>
-                                Price
+                                <input type="checkbox" name="chbPrice" id="chbPrice">Price
                             </td>
                             <td>
-                                State
+                                <input type="checkbox" name="chbState" id="chbState">State
                             </td>
                             <td>
-                                Quantity
+                                <input type="checkbox" name="chbQuantity" id="chbQuantity">Quantity
                             </td>
                             </thead>
 
@@ -121,6 +121,43 @@
                         </table>
                         {!! Form::close() !!}
 
+                        <script>
+                            var i = {{$i}};
+
+                            $(document).ready(function()
+                            {
+                                $('#chbPrice').change(function()
+                                {
+                                    for(var j = 0; j <= i; j++) {
+                                        if (this.checked) {
+                                            $('#price' + j).prop( "disabled", true );
+
+                                        } else
+                                            $('#price' + j).prop( "disabled", false );
+                                    }
+                                });
+                                $('#chbState').change(function()
+                                {
+                                    for(var j = 0; j <= i; j++) {
+                                        if (this.checked) {
+                                            $('#state' + j).prop( "disabled", true );
+
+                                        } else
+                                            $('#state' + j).prop( "disabled", false );
+                                    }
+                                });
+                                $('#chbQuantity').change(function()
+                                {
+                                    for(var j = 0; j <= i; j++) {
+                                        if (this.checked) {
+                                            $('#quantity' + j).prop( "disabled", true );
+
+                                        } else
+                                            $('#quantity' + j).prop( "disabled", false );
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
