@@ -36,6 +36,7 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
             return $items;
         }
     */
+
     public function addItem(Product $product, $request)
     {
 

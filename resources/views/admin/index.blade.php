@@ -47,6 +47,9 @@
                         <br/>
                         <a href="{!! route('admin.completeIdsFromCsvGet') !!}">complete Ids From Csv</a>
                         <br/>
+
+                        <a href="{!! route('admin.blbost') !!}">base_prise modify</a>
+
                 </div>
             </div>
         </div>

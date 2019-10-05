@@ -132,4 +132,8 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
     Route::get('/admin/editionStatistics', ['as' => 'admin.editionsStatistic', 'uses' => 'Admin\EditionStatisticController@editionsSatatisticGet']);
     Route::post('/admin/editionStatistics', ['as' => 'admin.editionsStatistic', 'uses' => 'Admin\EditionStatisticController@editionsStatisticPost']);
 
+
+
+    Route::get('/admin/blbost', ['as' => 'admin.blbost', 'uses' => 'Admin\EditCardController@blbost']);
+
 });

@@ -41,6 +41,13 @@ class StockService
 
     public function edit($product, $data)
     {
+        //prasarna opravit
+        if($product->base_price != $data['price'])
+        {
+            $product->base_price = $data['price'];
+            $product->save();
+        }
+
         if ($data['stockId'] != '') {
             $stock = $this->stockRepository->getById($data['stockId']);
 
