@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Repositories\CardRepositoryInterface;
 use App\Repositories\EditionRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\StockRepositoryInterface;
 use App\Services\StockService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,6 +31,27 @@ class EditCardController extends Controller
         $this->stockService = $stockService;
         $this->middleware('auth');
         $this->middleware('admin');
+    }
+
+    //prasarna
+    public function blbost(StockRepositoryInterface $stockRepository){
+        $stock = $stockRepository->getAll();
+        foreach ($stock as $item){
+            $product = $item->product;
+            $product->base_price = $item->price;
+            $product->save();
+            /*
+            $product->price->PO = ceil($item->price * 0.3);
+            $product->price->PL = ceil($item->price * 0.4);
+            $product->price->LP = ceil($item->price * 0.6);
+            $product->price->GD = ceil($item->price * 0.7);
+            $product->price->EX = ceil($item->price * 0.8);
+            $product->price->NM = $item->price;
+            $product->price->MT = $item->price;
+            $product->price->save();
+            */
+        }
+        return redirect()->back();
     }
 
     public function editCardsSelect()
