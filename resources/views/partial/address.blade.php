@@ -17,7 +17,7 @@ if(!isset($address)){
 }
 ?>
 <table>
-    <tr><td>{{isset($address->name)?$address->name:\Auth::user()->forename . ' ' . \Auth::user()->name}}</td></tr>
+    <tr><td>{{isset($address->name)?$address->name:$user->forename . ' ' . $user->name}}</td></tr>
     <tr><td>{{$address->street}} {{$address->number}}{{ isset($address->flat) && $address->flat != '' ? '/' . $address->flat : ''}}</td></tr>
     <tr><td>{{$address->city}}</td></tr>
     <tr><td>{{$address->postal}} {{$address->country}}</td></tr>

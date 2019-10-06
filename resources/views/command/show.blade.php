@@ -15,7 +15,7 @@
                             </tr>
                             <tr>
                                 <td style="border: black 1px solid">@include('partial.payment',['payment' => $command->payment])</td>
-                                <td style="border: black 1px solid">@include('partial.address',['address' => $command->billing_address])</td>
+                                <td style="border: black 1px solid">@include('partial.address',['address' => $command->billing_address, 'user' => $command->client])</td>
                             </tr>
                             <tr>
                                 <td><br/><br/></td>
