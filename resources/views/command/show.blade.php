@@ -23,7 +23,16 @@
                             <tr style="border: black 1px solid">
                                 <td colspan="2">@include('partial.items',['items' => $command->items])</td>
                             </tr>
-                            <tr><td></td></tr>
+                            <tr>
+                                <td>
+                                    @if(!Auth::guest() && Auth::user()->role >= 4)
+                                        <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 6]) !!}">
+                                            <button >payed</button>
+                                        </a>
+
+                                    @endif
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>

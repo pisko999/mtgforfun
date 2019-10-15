@@ -20,7 +20,7 @@ class IndexController extends Controller
     public function __construct(CommandRepositoryInterface $commandRepository, StockRepositoryInterface $stockRepository, ItemRepositoryInterface $itemRepository)
     {
         $this->middleware('auth');
-        //$this->middleware('admin')->only(['addItem', 'removeItem']);
+        $this->middleware('admin')->only(['changeState'/*,'addItem', 'removeItem'*/]);
         $this->commandRepository = $commandRepository;
         $this->stockRepository = $stockRepository;
         $this->itemRepository = $itemRepository;
@@ -94,6 +94,15 @@ class IndexController extends Controller
                 $this->commandRepository->removeItemFromWant($request);
                 break;
         }
+        return redirect()->back();
+    }
+
+    public function changeState($command_id, $state_id)
+    {
+        $command = $this->commandRepository->getById($command_id);
+        $command->status_id = $state_id;
+        $command->save();
+
         return redirect()->back();
     }
 

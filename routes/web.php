@@ -39,6 +39,7 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
     //command routes
     Route::get('/command', ['as' => 'command.index', 'uses' => 'Command\IndexController@index']);
     Route::get('/command/{command_id}', ['as' => 'command.show', 'uses' => 'Command\IndexController@showIndex']);
+    Route::get('/command/{command_id}/{state_id}', ['as' => 'command.changeState', 'uses' => 'Command\IndexController@changeState']);
 
     //payment routes
     Route::get('/payment/{payment_id}', ['as' => 'payment.show', 'uses' => 'Payment\IndexController@show']);
