@@ -29,6 +29,9 @@
                                         <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 6]) !!}">
                                             <button >payed</button>
                                         </a>
+                                        <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 9]) !!}">
+                                            <button >delivered</button>
+                                        </a>
 
                                     @endif
                                 </td>

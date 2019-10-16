@@ -26,6 +26,9 @@ $i = 0;
 do{
 
 if (isset($stock[$i]) && $stock[$i]->quantity > 0)
+    $i++;
+
+if (isset($stock[$i]))
     $stockItem = $stock[$i];
 
 $image_path =
