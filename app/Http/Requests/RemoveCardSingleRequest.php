@@ -24,7 +24,7 @@ class RemoveCardSingleRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required', 'numeric', 'max:999'],
+            'id' => ['required', 'numeric'],
             'quantity' => ['required', 'numeric', 'max:99'],
         ];
     }
