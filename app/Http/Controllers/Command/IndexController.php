@@ -99,6 +99,7 @@ class IndexController extends Controller
 
     public function changeState($command_id, $state_id)
     {
+
         $command = $this->commandRepository->getById($command_id);
         $command->status_id = $state_id;
         $command->save();
