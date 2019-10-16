@@ -109,6 +109,7 @@ class AddCardController extends Controller
 \Debugbar::info($stock);
         $idArticleMKM = $this->stockService->decrease($stock, $request->quantity);
 
+        return view('home');
         return redirect()->back();
 
     }
