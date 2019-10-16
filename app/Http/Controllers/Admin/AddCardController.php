@@ -106,10 +106,10 @@ class AddCardController extends Controller
 
         if ($stock == null)
             return abort(404);
-\Debugbar::info($stock);
+//\Debugbar::info($stock);
         $idArticleMKM = $this->stockService->decrease($stock, $request->quantity);
 
-        return view('home');
+        //return view('home');
         return redirect()->back();
 
     }
