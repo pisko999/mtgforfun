@@ -25,7 +25,7 @@ $i = 0;
 
 do{
 
-if (isset($stock[$i]) && $stock[$i]->quantity > 0)
+if (isset($stock[$i]) && $stock[$i]->quantity == 0)
     $i++;
 
 if (isset($stock[$i]))
