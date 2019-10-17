@@ -59,8 +59,9 @@
                                     $background = 'gold';
                                 elseif ($card->rarity == 'U')
                                     $background = 'lightgrey';
-                                $price = $stock != null && $stock->quantity > 0 ? $stock->price : $card->product->price->MT;
-                                $price = $price < 4 ? 4 : $price;
+                                //$price = $stock != null && $stock->quantity > 0 ? $stock->price : $card->product->price->MT;
+                                //$price = $price < 4 ? 4 : $price;
+                                $price = 4;
                                 ?>
                                 <tr>
                                     <input type="text" name="stock{{$i}}" id="stock{{$i}}"
