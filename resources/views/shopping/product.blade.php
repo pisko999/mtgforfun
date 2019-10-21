@@ -40,10 +40,8 @@
                                     $s->price :
                                     $p->price->MT;
                             $foil =
-                                isset($s->product->foil) ?
+                                $p->foil ?
                                     'foil' :
-                                    isset($p->foil)?
-                                        'foil':
                                     '';
 
                             //  var_dump($s);
