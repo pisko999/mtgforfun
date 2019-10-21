@@ -42,6 +42,8 @@
                             $foil =
                                 isset($s->product->foil) ?
                                     'foil' :
+                                    isset($p->foil)?
+                                        'foil':
                                     '';
 
                             //  var_dump($s);
