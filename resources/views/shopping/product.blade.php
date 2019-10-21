@@ -40,7 +40,7 @@
                                     $s->price :
                                     $p->price->MT;
                             $foil =
-                                isset($s->foil) ?
+                                isset($s->product->foil) ?
                                     'foil' :
                                     '';
 
