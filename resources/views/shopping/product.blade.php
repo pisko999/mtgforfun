@@ -39,8 +39,9 @@
                                 isset($s->price) ?
                                     $s->price :
                                     $p->price->MT;
+                            \Debugbar::info($p);
                             $foil =
-                                $p->foil ?
+                                isset($p->card) && $p->card->foil ?
                                     'foil' :
                                     '';
 
