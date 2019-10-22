@@ -1,4 +1,5 @@
-@extends('layouts.app')
+
+    @extends(isset($printable) && $printable == true?'layouts.printable':'layouts.app')
 
 @section('content')
     <div class="container">
@@ -23,23 +24,30 @@
                             <tr style="border: black 1px solid">
                                 <td colspan="2">@include('partial.items',['items' => $command->items])</td>
                             </tr>
-                            <tr>
-                                <td>
-                                    @if(!Auth::guest() && Auth::user()->role >= 4)
-                                        <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 6]) !!}">
-                                            <button >payed</button>
-                                        </a>
-                                        <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 9]) !!}">
-                                            <button >delivered</button>
-                                        </a>
+                            @if(!Auth::guest() && Auth::user()->role >= 4)
+                                @if(!isset($printable))
+                                    <tr>
+                                        <td>
+                                            <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 6]) !!}">
+                                                <button>payed</button>
+                                            </a>
+                                            <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 9]) !!}">
+                                                <button>delivered</button>
+                                            </a>
+                                            <a href="{!! route('command.showPrintable',['command_id' => $command->id]) !!}">
+                                                <button>Printable</button>
+                                        </td>
+                                    </tr>
+                                    </a>
+                                @endif
+                            @endif
 
-                                    @endif
-                                </td>
-                            </tr>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
+

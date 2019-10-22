@@ -63,6 +63,26 @@ class IndexController extends Controller
     }
 
 
+    public function showPrintable($command_id, $command_type = "command")
+    {
+        switch ($command_type){
+            case "command":
+                $command = $this->commandRepository->getById($command_id);
+                break;
+            case "cart":
+                $command = $this->commandRepository->getCartByUser(\Auth::user());
+                break;
+            case "want":
+                $command = $this->commandRepository->getWantByUser(\Auth::user());
+                break;
+        }
+
+        if (!isset($command))
+            return abort(404);
+        $printable = true;
+        return view($command_type . '.show', compact('command', 'printable'));
+    }
+
     public function addItem(ItemAddRequest $request, $command_type = "command")
     {
         switch ($command_type) {
