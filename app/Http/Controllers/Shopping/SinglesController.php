@@ -48,10 +48,10 @@ class SinglesController extends Controller
 
         $selected->editionId = $edition_id;
         $selected->onlyStock = 1;
-
+$lang = $this->productRepository->getLanguages();
         $showingCards = 1;
 
-        return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards'));
+        return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards', 'lang'));
     }
 
     public function search(SearchRequest $request, Search $search, SearchSelected $selected)
@@ -68,13 +68,14 @@ class SinglesController extends Controller
 
 
         $selected->hydrate($request);
+        $lang = $this->productRepository->getLanguages();
 
         $showingCards = 0;
 
         //\Debugbar::info($products);
 
 //return view('home');
-        return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards'));
+        return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards', 'lang'));
 
     }
 
@@ -88,10 +89,11 @@ class SinglesController extends Controller
 
 
         $selected->hydrate($request);
+        $lang = $this->productRepository->getLanguages();
 
         $showingCards = 1;
 
-        return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards'));
+        return view('shopping.list', compact('products', 'links', 'rarities', 'search', 'selected', 'showingCards', 'lang'));
 
     }
 

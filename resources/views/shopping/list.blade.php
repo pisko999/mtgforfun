@@ -39,7 +39,8 @@ $states = array(
                             @foreach($products as $item)
                                 @include('partial.listItem',[
                                     'item' => $item,
-                                    'states' => $states])
+                                    'states' => $states,
+                                    'langs' => $lang])
 
                             @endforeach
                             {!! $links !!}

@@ -84,7 +84,8 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
             'initial_price' => $price, //set back to $product->price->m as not work with items without initial prices
             'quantity' => $request['quantity'],
             'price' => $price,
-            'state' => $state
+            'state' => $state,
+            'language' => mb_strtoupper($request['lang'])
         ]);
 
         $item->save();

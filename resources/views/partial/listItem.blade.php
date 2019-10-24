@@ -68,7 +68,7 @@ $state = isset($stockItem->state) ? $states[$stockItem->state] : "";
             </td>
             <td colspan="1" class="col-md-4" style="text-align: left">
                 <a href="{!! route('shopping.show', ['itemId'=>$product->id])  !!}">
-                    {{$product->name . ((isset($product->lang) && ($product->lang != 'en'))? (' - ' . $product->lang ): '')}}
+                    {{$product->name . ((isset($stockItem->language) && ($stockItem->language != 'EN'))? (' - ' . $stockItem->language ): '')}}
                 </a>
             </td>
             <td class="col-md-3">
@@ -135,6 +135,12 @@ $state = isset($stockItem->state) ? $states[$stockItem->state] : "";
                     <label for="state">State :</label>
                     <select name="state" id="state">
                         @foreach($states as $key=>$value)
+                            <option value="{{$key}}">{{$value}}</option>
+                        @endforeach
+                    </select>
+                    <label for="lang">Lang :</label>
+                    <select name="lang" id="lang">
+                        @foreach($lang as $key=>$value)
                             <option value="{{$key}}">{{$value}}</option>
                         @endforeach
                     </select>
