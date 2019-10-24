@@ -17,6 +17,7 @@ class EditionController extends Controller
     private $colors = array('W' => 1, 'U' => 2, 'B' => 3, 'R' => 4, 'G' => 5);
     private $rarities;
     private $raritiesRepository;
+    private $land;
 
 
     public function __construct(EditionRepositoryInterface $editionRepository,
@@ -77,6 +78,12 @@ class EditionController extends Controller
         foreach ($cards as $card) {
             //\Debugbar::info($card);
             //if card dont exist
+            $ar = array(  'Plains', 'Island', 'Swamp', 'Mountain', 'Forest');
+
+            $this->land = false;
+            if(in_array($card->name, $ar))
+                $this->land = true;
+
             $n = $localCards->filter(function ($e) use ($card) {
                 return $e->product->name == $card->name && $e->number == $card->collector_number && $e->product->lang == $card->lang;
             });
@@ -93,14 +100,16 @@ class EditionController extends Controller
             else {
 
                 foreach ($n as $localCard) {
+
                     //if dont have image
                     //\Debugbar::info($n);
                     //\Debugbar::info($localCard->product->image);
-                    if ($localCard->product->image == null) {
-                        $this->addImage($card, $localCard->id);
-                    } elseif (!file_exists(storage_path($localCard->product->image->path))) {
+                    if ($localCard->product->image == null ||  $this->land) {
                         $localCard->product->image()->delete();
                         $this->addImage($card, $localCard->id);
+                    } elseif (!file_exists(storage_path($localCard->product->image->path))) {
+                        //$localCard->product->image()->delete();
+                        //$this->addImage($card, $localCard->id);
                     }
                 }
             }
@@ -145,7 +154,7 @@ class EditionController extends Controller
     private function getImagePath($card)
     {
         $num = '';
-        if ($card->set == "eld" && $card->collector_number > 249)
+        if (($card->set == "eld" && $card->collector_number > 249) || $this->land)
             $num .= "-" . $card->collector_number;
         $lang = '';
         echo $card->lang;
@@ -184,6 +193,9 @@ class EditionController extends Controller
         if (file_exists(storage_path('app/public/' . $img_path))) {
 //\Debugbar::info($img_path);
             // saving path to DB
+            if($this->land) {
+                \DB::table('images')->where('product_id',$item_id)->delete();
+            }
             \DB::table('images')->insert([
                 'alt' => $card->name,
                 'path' => $img_path,
