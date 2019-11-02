@@ -40,7 +40,7 @@ $states = array(
                                 @include('partial.listItem',[
                                     'item' => $item,
                                     'states' => $states,
-                                    'langs' => $lang])
+                                    'langs' => isset($lang)?$lang:''])
 
                             @endforeach
                             {!! $links !!}
