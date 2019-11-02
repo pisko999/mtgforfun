@@ -138,12 +138,14 @@ $state = isset($stockItem->state) ? $states[$stockItem->state] : "";
                             <option value="{{$key}}">{{$value}}</option>
                         @endforeach
                     </select>
+                    @if(isset($lang))
                     <label for="lang">Lang :</label>
                     <select name="lang" id="lang">
                         @foreach($lang as $key=>$value)
                             <option value="{{$key}}">{{$value}}</option>
                         @endforeach
                     </select>
+                    @endif
                     <label for="price">Price :</label>
                     <input type="text" name="price" id="price"
                            value="{{$price}}"
