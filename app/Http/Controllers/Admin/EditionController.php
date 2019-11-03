@@ -85,7 +85,7 @@ class EditionController extends Controller
                 $this->land = true;
 $promo = $this->getPromo($card);
             $n = $localCards->filter(function ($e) use ($card, $promo) {
-                return $e->product->name == $card->name && $e->number == $card->collector_number && $e->product->lang == $card->lang && $e->promo == $promo;
+                return $e->product->name == $card->name && $e->number == $card->collector_number && $e->product->lang == $card->lang && $e->promo == $promo && $e->foil == $card->foil;
             });
             //\Debugbar::info($n);
 
