@@ -160,7 +160,16 @@ class EditionController extends Controller
         echo $card->lang;
         if ($card->lang != "en")
             $lang .= "-" . $card->lang;
+        $promo = "-";
+        if (!is_numeric($card->collector_number)) {
 
+            for ($i = 0; $i < strlen($card->collector_number); $i++) {
+                $c = $card->collector_number[$i];
+                if (!is_numeric($c)) {
+                    $promo .= $c;
+                }
+            }
+        }
         $img_path =
             "image/" .
             $this->edition->sign .
@@ -174,6 +183,7 @@ class EditionController extends Controller
                     ))) .
             $num .
             $lang .
+            $promo .
             ".jpg";
         //echo $img_path;
         return $img_path;
