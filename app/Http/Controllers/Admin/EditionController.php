@@ -89,6 +89,7 @@ class EditionController extends Controller
             });
             //\Debugbar::info($n);
 
+            $promo = !is_numeric($card->collector_number);
             if ($n->count() == 0) {
 
                 //if card exist only in foil version, we add directly foil card
@@ -104,7 +105,7 @@ class EditionController extends Controller
                     //if dont have image
                     //\Debugbar::info($n);
                     //\Debugbar::info($localCard->product->image);
-                    if ($localCard->product->image == null ||  $this->land) {
+                    if ($localCard->product->image == null ||  $this->land || $promo) {
                         $localCard->product->image()->delete();
                         $this->addImage($card, $localCard->id);
                     } elseif (!file_exists(storage_path($localCard->product->image->path))) {
