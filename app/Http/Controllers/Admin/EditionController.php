@@ -83,13 +83,14 @@ class EditionController extends Controller
             $this->land = false;
             if(in_array($card->name, $ar))
                 $this->land = true;
-
-            $n = $localCards->filter(function ($e) use ($card) {
-                return $e->product->name == $card->name && $e->number == $card->collector_number && $e->product->lang == $card->lang;
+$promo = $this->getPromo($card);
+            $n = $localCards->filter(function ($e) use ($card, $promo) {
+                return $e->product->name == $card->name && $e->number == $card->collector_number && $e->product->lang == $card->lang && $e->promo == $promo;
             });
             //\Debugbar::info($n);
 
-            $promo = !is_numeric($card->collector_number);
+            //$promo = !is_numeric($card->collector_number);
+
             if ($n->count() == 0) {
 
                 //if card exist only in foil version, we add directly foil card
@@ -105,7 +106,7 @@ class EditionController extends Controller
                     //if dont have image
                     //\Debugbar::info($n);
                     //\Debugbar::info($localCard->product->image);
-                    if ($localCard->product->image == null ||  $this->land || $promo) {
+                    if ($localCard->product->image == null ||  $this->land || $promo!='' ) {
                         $localCard->product->image()->delete();
                         $this->addImage($card, $localCard->id);
                     } elseif (!file_exists(storage_path($localCard->product->image->path))) {
@@ -147,6 +148,17 @@ class EditionController extends Controller
         return $price;
     }
 
+    private function getPromo($card){
+        $promo = '';
+        for ($i = 0; $i < strlen($card->collector_number); $i++) {
+            $c = $card->collector_number[$i];
+            if (!is_numeric($c)) {
+                $promo .= $c;
+            }
+        }
+        return $promo;
+    }
+
     /**
      * get image path
      * @param $card
@@ -164,12 +176,7 @@ class EditionController extends Controller
         $promo = "-";
         if (!is_numeric($card->collector_number)) {
 
-            for ($i = 0; $i < strlen($card->collector_number); $i++) {
-                $c = $card->collector_number[$i];
-                if (!is_numeric($c)) {
-                    $promo .= $c;
-                }
-            }
+                    $promo .= $this->getPromo($card);
         }
         $img_path =
             "image/" .
