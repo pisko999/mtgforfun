@@ -48,7 +48,9 @@ class StockRepository extends ModelRepository implements StockRepositoryInterfac
 
         if ($request['quantity'] == 0 || $request['quantity'] == null)
             return;
-        $stock = $this->model->where('product_id', $product->id)->get();
+        if(!isset($request->lang))
+            $request->lang = "EN";
+        $stock = $this->model->where('product_id', $product->id)->where('language', $request->lang)->get();
         //trying to add to exists
         //\Debugbar::info($stock);
 
