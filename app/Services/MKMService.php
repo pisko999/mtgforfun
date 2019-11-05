@@ -7,8 +7,8 @@ namespace App\Services;
 class MKMService
 {
 
-//    private $baseUrl = "https://api.cardmarket.com/ws/v2.0/output.json/";
-    private $baseUrl = "https://sandbox.mkmapi.eu/ws/v1.1/output.json/";
+    private $baseUrl = "https://api.cardmarket.com/ws/v2.0/output.json/";
+//    private $baseUrl = "https://sandbox.mkmapi.eu/ws/v2.0/output.json/";
     private $method;
     private $url;
     private $appToken;

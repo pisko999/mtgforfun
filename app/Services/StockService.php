@@ -9,7 +9,7 @@ use App\Repositories\StockRepositoryInterface;
 
 class StockService
 {
-    protected $MKM = false;
+    protected $MKM = true;
     protected $stockRepository;
     protected $MKMService;
 
