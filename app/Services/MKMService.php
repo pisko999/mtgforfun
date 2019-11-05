@@ -8,6 +8,7 @@ class MKMService
 {
 
     private $baseUrl = "https://api.cardmarket.com/ws/v2.0/output.json/";
+    //private $baseUrl = "https://sandbox.cardmarket.com/ws/v2.0/output.json/";
 //    private $baseUrl = "https://sandbox.mkmapi.eu/ws/v2.0/output.json/";
     private $method;
     private $url;

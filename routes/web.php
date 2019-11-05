@@ -138,4 +138,7 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
 
     Route::get('/admin/blbost', ['as' => 'admin.blbost', 'uses' => 'Admin\EditCardController@blbost']);
 
+    Route::get('/admin/MKMAddEdition', ['as' => 'admin.MKMAddEditionSelect', 'uses' => 'Admin\MKMController@addEditionSelect']);
+    Route::get('/admin/MKMAddEdition/{id}', ['as' => 'admin.MKMAddEdition', 'uses' => 'Admin\MKMController@addEdition']);
+
 });

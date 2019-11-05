@@ -192,8 +192,10 @@
                             <a href="{!! route('admin.commands') !!}">Commands</a>
                         </li>
                         <li class="nav-item">
+                            <a href="{!! route('admin.MKMAddEditionSelect') !!}">add mkm stock</a>
                         </li>
                         <li class="nav-item">
+                            <a href="{!! route('admin.connect') !!}">connect</a>
 
                         </li>
                         <li class="nav-item">

@@ -18,16 +18,105 @@ class MKMController extends Controller
 {
     protected $editionRepository;
     protected $cardRepository;
+    protected $stockRepository;
 
     public function __construct(
         EditionRepositoryInterface $editionRepository,
-        CardRepositoryInterface $cardRepository
+        CardRepositoryInterface $cardRepository,
+        StockRepositoryInterface $stockRepository
     )
     {
         $this->editionRepository = $editionRepository;
         $this->cardRepository = $cardRepository;
+        $this->stockRepository = $stockRepository;
         $this->middleware('auth');
         $this->middleware('admin');
+    }
+
+    public function addEditionSelect()
+    {
+        $editions = $this->editionRepository->getArrayForSelect();
+
+        return view('admin.MKMAddEditionSelect', compact('editions'));
+    }
+
+    public function addEdition($id)
+    {
+        $mkm = new MKMService();
+        $stock = $this->stockRepository->getAll();
+        $message = array();
+        $i = 0;
+        foreach ($stock as $s) {
+            if ($s->product->idProductMKM == null)
+                continue;
+
+
+            if ($s->quantity == 0)
+                continue;
+
+            $mkmproduct = $mkm->getProduct($s->product->idProductMKM);
+            //\Debugbar::info($mkmproduct);
+            if ($s->product->card != null) {
+                if ($s->product->card->promo != '')
+                    continue;
+                if ($s->language != 'EN')
+                    continue;
+
+                $q = $s->quantity > 30 ? 30 : $s->quantity;
+
+                if ($s->product->card->foil)
+                    $s->price = $this->getPrice($mkmproduct->product->priceGuide->TRENDFOIL);
+                else
+                    $s->price = $this->getPrice($mkmproduct->product->priceGuide->TREND);
+
+                $answer = ($mkm->addToStock($s->product->idProductMKM, $q, $s->price / 25.5, $s->state, 1, "", $s->product->card->foil));
+                if (!isset($answer->inserted[0]->error))
+                    $s->idArticleMKM = $answer->inserted[0]->idArticle->idArticle;
+                $s->save();
+            }
+            $i++;
+            if ($i > 15)
+                break;
+        }
+
+
+        $edition = $this->editionRepository->getById($id);
+        $cards = $this->cardRepository->getCardsByEditionWithProductAndStock($id);
+        /*
+        foreach ($cards as $card)
+        {
+            \Debugbar::info($card->product);
+        }
+        */
+//$onlineCards = $mkm->getSingles($edition->idExpansionMKM);
+//\Debugbar::info($mkm->getSingles($edition->idExpansionMKM)->single[0]);
+        return view('admin.MKMAddEdition', compact('cards', 'stock'));
+    }
+
+    private function getPrice($price)
+    {
+        $p = $price * 25.5 * 1.1;
+        if ($p % 10 == 0)
+            $p++;
+
+        if ($p > 75 || ($p > 20 && $p % 10 > 5))
+            $p = (ceil($p / 10) * 10) - 1;
+        elseif ($p > 20 && $p % 10 <= 5)
+            $p = (ceil($p / 10) * 10) - 5;
+        elseif ($p > 15)
+            $p = 19;
+        elseif ($p > 12)
+            $p = 15;
+        elseif ($p > 9)
+            $p = 12;
+        elseif ($p > 7)
+            $p = 9;
+        elseif ($p > 5)
+            $p = 5;
+        elseif ($p < 4)
+            $p = 4;
+
+        return $p;
     }
 
     public function connect()
@@ -35,10 +124,10 @@ class MKMController extends Controller
 
         $mkm = new MKMService();
 
-        $answer=$mkm->getGames();
+        $answer = $mkm->getGames();
 
         //$answer = $conn->call("account");
-        \Debugbar::info("$answer");
+        \Debugbar::info($answer);
         //$answer = $mkm->getSingles(1);
         //\Debugbar::info($answer->single[15]);
 
@@ -48,8 +137,8 @@ class MKMController extends Controller
         //    $mkm->decreaseStock($article->idArticle, $article->count);
         //}
         //$answer = $mkm->getProductList();
-        //$answer = $mkm->getProduct(210101);
-        //\Debugbar::info($answer);
+        $answer = $mkm->getProduct(372131);
+        \Debugbar::info($answer);
 
         //$answer = $mkm->getExpansions();
         //\Debugbar::info($answer);

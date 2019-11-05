@@ -28,7 +28,7 @@ class EditionStatisticController extends Controller
     public function editionsStatisticPost(EditionGetRequest $request)
     {
         $edition = $this->editionRepository->getById($request->edition);
-        $cards = $this->cardRepository->getCardsByEditionOnlyStockWithProductAndStockPaginate($request->edition);
+        $cards = $this->cardRepository->getCardsByEditionOnlyStockWithProductAndStock($request->edition);
         $count = 0;
         $price = 0;
         foreach ($cards as $card) {

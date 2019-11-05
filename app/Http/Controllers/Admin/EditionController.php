@@ -50,7 +50,7 @@ class EditionController extends Controller
 
         $set = json_decode(file_get_contents('https://api.scryfall.com/sets/' . $edition->sign));
         try {
-            $this->addCards($set->search_uri, $edition);
+            $this->addCards($set->search_uri);
         } catch (\Exception $e) {
             \Debugbar::info($e);
         }

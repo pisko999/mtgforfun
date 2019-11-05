@@ -81,7 +81,7 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
     {
         $q = $this->getCardsByEdition($editionId);
         //$q = $this->searchByFoil($q, $foil);
-        $q = $this->searchByLang($q,'en');
+        $q = $this->searchByLang($q, 'en');
         $q = $this->joinData($q);
         return $q->orderBy($orderBy, $orderByType)
             ->paginate($n, ['*'], 'page', $page);
@@ -91,7 +91,7 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
     {
         $q = $this->getCardsByEdition($editionId);
         $q = $this->searchOnlyInStock($q);
-        $q = $this->searchByLang($q,'en');
+        $q = $this->searchByLang($q, 'en');
         $q = $this->joinData($q);
         return $q->orderBy($orderBy, $orderByType)
             ->paginate($n, ['*'], 'page', $page);
@@ -101,17 +101,20 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
     {
         $q = $this->getCardsByEdition($editionId);
         $q = $this->searchByFoil($q, $foil);
-        $q = $this->searchByLang($q,'en');
+        $q = $this->searchByLang($q, 'en');
         $q = $this->joinData($q);
         return $q->orderBy($orderBy, $orderByType)
             ->paginate($n, ['*'], 'page', $page);
     }
-public function getCardsByEditionOnlyStockWithProductAndStockPaginate($editionId){
-    $q = $this->getCardsByEdition($editionId);
-    $q = $this->searchOnlyInStock($q);
-    $q = $this->joinDataSmall($q);
-    return $q->get();
-}
+
+    public function getCardsByEditionOnlyStockWithProductAndStock($editionId)
+    {
+        $q = $this->getCardsByEdition($editionId);
+        $q = $this->searchOnlyInStock($q);
+        $q = $this->joinDataSmall($q);
+        return $q->get();
+    }
+
 
     private function getCardsByEdition($editionId) // products.base_price desc
     {
@@ -139,7 +142,7 @@ public function getCardsByEditionOnlyStockWithProductAndStockPaginate($editionId
     {
         $q = $this->model;
         $q = $this->searchByEdition($q, $edition_id);
-        $q = $this->searchByLang($q,'en');
+        $q = $this->searchByLang($q, 'en');
         $q = $this->joinData($q);
         $q = $q->orderby('number');
         return $q->get();
@@ -238,12 +241,14 @@ public function getCardsByEditionOnlyStockWithProductAndStockPaginate($editionId
 
         }
     }
+
     private function joinDataSmall($q)
     {
         $q = $q->join('products', 'cards.id', '=', 'products.id')
             ->with('product.stock');
         return $q;
     }
+
     private function joinData($q)
     {
         //jointure because ordering on collumn in products table
@@ -283,7 +288,7 @@ public function getCardsByEditionOnlyStockWithProductAndStockPaginate($editionId
     {
         $q = $q->where(function ($q) {
             return $q->whereHas('product', function ($q) {
-                return $q->whereHas('stock', function($q){
+                return $q->whereHas('stock', function ($q) {
                     return $q->where('quantity', '>', 0);
                 });
             });
