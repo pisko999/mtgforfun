@@ -1,5 +1,4 @@
-
-    @extends(isset($printable) && $printable == true?'layouts.printable':'layouts.app')
+@extends(isset($printable) && $printable == true?'layouts.printable':'layouts.app')
 
 @section('content')
     <div class="container">
@@ -21,11 +20,14 @@
                             <tr>
                                 <td><br/><br/></td>
                             </tr>
+                            @if(!isset($printable))
+                                <?php $printable = false;?>
+                            @endif
                             <tr style="border: black 1px solid">
-                                <td colspan="2">@include('partial.items',['items' => $command->items])</td>
+                                <td colspan="2">@include('partial.items',['items' => $command->items, 'printable' => $printable])</td>
                             </tr>
                             @if(!Auth::guest() && Auth::user()->role >= 4)
-                                @if(!isset($printable))
+                                @if(!$printable)
                                     <tr>
                                         <td>
                                             <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 6]) !!}">

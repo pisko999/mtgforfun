@@ -17,7 +17,7 @@ if (!isset($items))
         <th>Price p.u.</th>
         <th>Quantity</th>
         <th>Price</th>
-        @if(!Auth::guest() && Auth::user()->role >= 4)
+        @if(!Auth::guest() && Auth::user()->role >= 4 && !$printable)
             <th>Actions</th>
         @endif
     </tr>
@@ -47,7 +47,7 @@ if (!isset($items))
 
                 </td>
             @else
-                @if(!Auth::guest() && Auth::user()->role >= 4)
+                @if(!Auth::guest() && Auth::user()->role >= 4 && !$printable)
                     <td>
                         {!! Form::open(['route' => 'command.removeItem', 'id' => 'form' . (isset($item->id)?$item->id : '')]) !!}
                         <input name="id" value="{{$item->id}}" hidden>
@@ -77,6 +77,7 @@ if (!isset($items))
             @endif
         </tr>
     @endforeach
+    <tr><td colspan="4"><hr></td></tr>
     <tr>
         <td colspan="2"></td>
         <td>Total price:</td>
