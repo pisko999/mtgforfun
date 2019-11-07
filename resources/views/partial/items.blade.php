@@ -27,7 +27,7 @@ if (!isset($items))
         <?php $price += $item->price * $item->quantity; ?>
         <tr>
             <td>
-                <a href="{!! route('shopping.show', ['itemId'=>$item->stock->product_id])  !!}">{{$item->stock->product->name}}</a>
+                <a href="{!! route('shopping.show', ['itemId'=>$item->stock->product_id])  !!}">{{$item->stock->product->name . isset($item->stock->product->card) && $item->stock->product->card->foil == 1 ? ' - foil': ''}}</a>
             </td>
             <td>{{$item->price}}</td>
             <td>{{$item->quantity}}</td>
