@@ -8,17 +8,17 @@
                     <div class="card-header">Choice what you want</div>
 
                     <div class="card-body">
-                        @if (session('status'))
+                        {{--@if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
                             </div>
-                        @endif
+                        @endif--}}
                         <table style="align: center; width: 100%">
                             <thead>
                             <td>id</td>
                             <td>date</td>
                             @if(!Auth::guest() && Auth::user()->role >= 4)
-                                <td>cliend</td>
+                                <td>client</td>
                             @endif
                             <td>items</td>
                             <td>total</td>
@@ -58,7 +58,7 @@
                                         </a>
                                     </td>
                                     @if(!Auth::guest() && Auth::user()->role >= 4)
-                                        actions
+                                        <td>actions</td>
                                     @endif
                                 </tr>
                             @endforeach

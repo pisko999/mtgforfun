@@ -39,5 +39,8 @@ class StatusesTableSeeder extends Seeder
         DB::table('statuses')->insert([
             'status'=>'Delivered',
         ]);
+        DB::table('statuses')->insert([
+            'status'=>'Deck',
+        ]);
     }
 }

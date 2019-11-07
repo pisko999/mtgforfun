@@ -34,6 +34,9 @@
                                             <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 9]) !!}">
                                                 <button>delivered</button>
                                             </a>
+                                            <a href="{!! route('command.changeState',['command_id' => $command->id, 'state_id' => 10]) !!}">
+                                                <button>DECK</button>
+                                            </a>
                                             <a href="{!! route('command.showPrintable',['command_id' => $command->id]) !!}">
                                                 <button>Printable</button>
                                         </td>
