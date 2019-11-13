@@ -175,10 +175,10 @@ class MKMService
         $url = $this->baseUrl . $command;
         $this->method = $method;
         $this->url = $url;
-        $this->appToken = "RY4vUR9Xxb0CRr9u";
-        $this->appSecret = "br102Q0CriJJHovCWxA1LoOGpaIdGnYS";
-        $this->accessToken = "NPguoNHnJAab59TvZlxMsFClsLmH96Mw";
-        $this->accessSecret = "UrwhTJjxbsrJzsk2P5HZo17X4KeaRGbL";
+        $this->appToken = "pOvuvylU7zLW8wW0";
+        $this->appSecret = "SmKuTvyuSOHeTblc9IWekFZ4q4CzPGAG";
+        $this->accessToken = "vRj39mHudtGfKCaKF6bXwIoL2XCKWTVx";
+        $this->accessSecret = "QPbBWajSgTfaINwtka9P5EPpsSrQ7X89";
         $this->nonce = $this->getNonce();
         $this->timestamp = time();
         $this->signatureMethod = "HMAC-SHA1";

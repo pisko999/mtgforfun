@@ -29,7 +29,7 @@
                                                                 $bg = "yellow";
                                                         ?>
                                                         <td id="{{'td' . $card->id}}"
-                                                            style="border: 1px solid black; background-color: {{$bg}}">{{$card->id}}</td>
+                                                            style="border: 1px solid black; background-color: {{$bg}}">{{$card->number}}</td>
                                                         <?php $col++; ?>
                                                         @if($col > 10)
                                                     </tr>
