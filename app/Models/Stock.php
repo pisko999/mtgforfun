@@ -30,7 +30,7 @@ class Stock extends Model
         $mkmProduct = $mkm->getProduct($this->product->idProductMKM);
         $this->checkPrice($mkmProduct);
         $quantity = $this->quantity > 30 ? 30 : $this->quantity;
-        \Debugbar::info($quantity);
+        //\Debugbar::info($quantity);
         if ($quantity > 0) {
             $answer = $mkm->addToStock($this->product->idProductMKM, $quantity, $this->getPriceEur(), $this->state, $this->language, '', $this->product->card->foil == 1 ? "true" : "false");
             try {
@@ -39,7 +39,7 @@ class Stock extends Model
             } catch (\Exception $e) {
                 //\Debugbar::info($answer);
             }
-            \Debugbar::info($answer);
+            //\Debugbar::info($answer);
             $this->save();
         }
     }
