@@ -13,6 +13,8 @@ use App\Repositories\StockRepositoryInterface;
 use App\Services\MKMService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use mysql_xdevapi\Exception;
 
 class MKMController extends Controller
 {
@@ -42,8 +44,10 @@ class MKMController extends Controller
 
     public function addEdition($id)
     {
-        $mkm = new MKMService();
-        $stock = $this->stockRepository->getAll();
+        //$mkm = new MKMService();
+        //$stock = $this->stockRepository->getAll();
+
+        /*
         $message = array();
         $i = 0;
         foreach ($stock as $s) {
@@ -69,19 +73,27 @@ class MKMController extends Controller
                 else
                     $s->price = $this->getPrice($mkmproduct->product->priceGuide->TREND);
 
-                $answer = ($mkm->addToStock($s->product->idProductMKM, $q, $s->price / 25.5, $s->state, 1, "", $s->product->card->foil));
-                if (!isset($answer->inserted[0]->error))
-                    $s->idArticleMKM = $answer->inserted[0]->idArticle->idArticle;
-                $s->save();
+                $answer = $mkm->addToStock($s->product->idProductMKM, $q, $s->price / 25.5, $s->state, $s->lang, "", $s->product->card->foil);
+                \Debugbar::info($answer);
+//
+//                    if (!isset($answer->inserted[0]->error))
+//                        $s->idArticleMKM = $answer->inserted[0]->idArticle->idArticle;
+//                    $s->save();
             }
             $i++;
             if ($i > 15)
                 break;
         }
-
+*/
 
         $edition = $this->editionRepository->getById($id);
-        $cards = $this->cardRepository->getCardsByEditionWithProductAndStock($id);
+
+        $nonfoils = $this->cardRepository->getCardsByEditionAndFoilWithProductAndStock($id, 0);
+        $foils = $this->cardRepository->getCardsByEditionAndFoilWithProductAndStock($id, 1);
+
+        $allCards[0] = $nonfoils;
+        $allCards[1] = $foils;
+
         /*
         foreach ($cards as $card)
         {
@@ -90,7 +102,69 @@ class MKMController extends Controller
         */
 //$onlineCards = $mkm->getSingles($edition->idExpansionMKM);
 //\Debugbar::info($mkm->getSingles($edition->idExpansionMKM)->single[0]);
-        return view('admin.MKMAddEdition', compact('cards', 'stock'));
+        return view('admin.MKMAddEdition', compact('edition', 'allCards'));
+    }
+
+    public function CheckProductIds($id)
+    {
+        $mkm = new MKMService();
+        $edition = $this->editionRepository->getByIdWithCardsAndProducts($id);
+        $cards = $edition->cards;
+        \Debugbar::info($cards);
+
+        $expansionMKM = null;
+        if (Storage::has('public/mkm/' . $id . '.json'))
+            $expansionMKM = json_decode(Storage::get('public/mkm/' . $id . '.json'));
+        else {
+            $expansionMKM = $mkm->getSingles($edition->idExpansionMKM);
+            Storage::put('public/mkm/' . $id . '.json', json_encode($expansionMKM));
+        }
+
+        $singles = $expansionMKM->single;
+        \Debugbar::info($cards);
+
+        foreach ($singles as $single) {
+            \Debugbar::info($single);
+            $local = $cards->filter(function ($l) use ($single){return ($l->number == $single->number);});
+            foreach ($local as $l)
+                if($l->product->idProductMKM == null) {
+                    $l->product->idProductMKM = $single->idProduct;
+                    $l->product->save();
+                }
+        }
+
+        //return view('home');
+        return redirect()->back();
+    }
+
+    /*
+     * return
+     * 1 success
+     * -1 no product id from MKM
+     * -2 no stock
+     */
+    public function checkCard($id)
+    {
+        $card = $this->cardRepository->getByIdWithProductAndStock($id);
+
+        $product = $card->product;
+        $stock = $product->stock;
+        if ($product->idProductMKM == null)
+            return -1;
+        if (count($stock) == 0)
+            return -2;
+        foreach ($stock as $item) {
+            if ($item->idArticleMKM == null)
+                $item->addToMKM();
+            else
+                $item->checkOnMKM();
+
+        }
+
+        return 1;
+    }
+    public function checkCardApi(Request $request){
+        return $this->checkCard($request->id);
     }
 
     private function getPrice($price)

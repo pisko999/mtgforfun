@@ -140,5 +140,9 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
 
     Route::get('/admin/MKMAddEdition', ['as' => 'admin.MKMAddEditionSelect', 'uses' => 'Admin\MKMController@addEditionSelect']);
     Route::get('/admin/MKMAddEdition/{id}', ['as' => 'admin.MKMAddEdition', 'uses' => 'Admin\MKMController@addEdition']);
+    Route::get('/admin/MKMCheckProductIds/{id}', ['as' => 'admin.MKMCheckProductIds', 'uses' => 'Admin\MKMController@CheckProductIds']);
+
+    Route::get('/admin/checkCardOnMKM/{id}', ['as' => 'admin.checkCardOnMKM', 'uses' => 'Admin\MKMController@checkCard']);
+    Route::get('/admin/checkCardOnMKMApi', ['as' => 'admin.checkCardOnMKMApi', 'uses' => 'Admin\MKMController@checkCardApi']);
 
 });

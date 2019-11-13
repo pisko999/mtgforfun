@@ -28,10 +28,13 @@ interface CardRepositoryInterface
 
     public function getCardsByEditionWithProductAndStock($edition_id);
 
+    public function getCardsByEditionAndFoilWithProductAndStock($edition_id, $foil);
+
     public function add(CardAddJsonRequest $request, Product $product, Edition $set);
 
     public function getCardsSearchPaginate(CardSearchRequest $request, $nbrPerPage);
 
     public function getCardsByEditionOnlyStockWithProductAndStock($editionId);
+    public function getByIdWithProductAndStock($id);
 
 }

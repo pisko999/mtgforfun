@@ -29,6 +29,8 @@ interface EditionRepositoryInterface
 
     public function getById($id);
 
+    public function getByIdWithCardsAndProducts($id);
+
     public function add(EditionAddRequest $request);
 
     public function getByCode($sign);

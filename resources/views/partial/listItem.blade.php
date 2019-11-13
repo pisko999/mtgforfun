@@ -162,6 +162,8 @@ $state = isset($stockItem->state) ? $states[$stockItem->state] : "";
                                required>
                         <input type="submit" value="Remove">
                         {{Form::close()}}
+                        <a href="{!! route('admin.checkCardOnMKM', ['id'=>$product->id])  !!}">check</a>
+
                     @endif
                 </td>
             </tr>

@@ -24,6 +24,22 @@ class MKMService
     private $baseString;
     private $header;
 
+    private $languages = array('cz', 'EN', 'FR', 'DE', 'ES', 'IT', 'CH', 'JA', 'PO', 'RU', 'KO', 'TCH');
+
+    /*
+     *    1 - English
+     *    2 - French
+     *    3 - German
+     *    4 - Spanish
+     *    5 - Italian
+     *    6 - Simplified Chinese
+     *    7 - Japanese
+     *    8 - Portuguese
+     *    9 - Russian
+     *    10 - Korean
+     *    11 - Traditional Chinese
+     */
+
     public function getGames()
     {
         return $this->call("games");
@@ -44,13 +60,20 @@ class MKMService
         return $this->call("products/" . $idProduct);
     }
 
+    public function getArticle($idArticle)
+    {
+        return $this->call("stock/article/". $idArticle);
+    }
+
     public function getStock()
     {
         return $this->call("stock");
     }
 
-    public function addToStock($idProduct, $count, $price, $condition = "MT", $idLanguage = "1", $comments = "", $isFoil = "false", $isSigned = "false", $isAltered = "false", $isPlayset = "false")
+    public function addToStock($idProduct, $count, $price, $condition = "MT", $language = "EN", $comments = "", $isFoil = "false", $isSigned = "false", $isAltered = "false", $isPlayset = "false")
     {
+        $idLanguage = array_search(strtoupper($language), $this->languages);
+        \Debugbar::info($idLanguage);
         $data = new product();
 
         $data->idProduct = $idProduct;
@@ -83,8 +106,9 @@ class MKMService
         return $this->call("stock/decrease", "PUT", $data);
     }
 
-    public function changeArticleInStock($idArticle, $count, $price, $condition = "MT", $idLanguage = "1", $comments = "", $isFoil = "false", $isSigned = "false", $isAltered = "false", $isPlayset = "false")
+    public function changeArticleInStock($idArticle, $count, $price, $condition = "MT", $language = "EN", $comments = "", $isFoil = "false", $isSigned = "false", $isAltered = "false", $isPlayset = "false")
     {
+        $idLanguage = array_search(strtoupper($language), $this->languages);
 
         $data = new article();
 

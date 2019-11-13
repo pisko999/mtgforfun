@@ -63,6 +63,11 @@ class EditionRepository extends ModelRepository implements EditionRepositoryInte
         return $this->model->whereId($id)->first();
     }
 
+    public function getByIdWithCardsAndProducts($id){
+        return $this->model->whereId($id)->with('cards', 'cards.product')->first();
+    }
+
+
     public function add(EditionAddRequest $request)
     {
         $edition = new Edition([

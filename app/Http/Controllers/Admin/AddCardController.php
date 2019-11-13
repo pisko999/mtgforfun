@@ -96,6 +96,7 @@ class AddCardController extends Controller
             return abort(404);
         $stock = $this->stockService->add($product, $request);
 
+        //return view('home');
         return redirect()->back();
 
     }

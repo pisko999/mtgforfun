@@ -29,7 +29,9 @@ class StockService
                 if ($stock->idArticleMKM != null) {
                     $answer = $this->MKMService->increaseStock($stock->idArticleMKM, $data->quantity);
                 } else {
-                    $answer = $this->MKMService->addToStock($product->idProductMKM, $data->quantity, $data->price / 25, $data->state, 1, "", isset($product->card) ? $product->card->foil : 0);
+                    $answer = $this->MKMService->addToStock($product->idProductMKM, $data->quantity, $data->price / 25, $data->state, $data->lang, "", isset($product->card) ? $product->card->foil : 0);
+                    \Debugbar::info($answer);
+
                     if (isset($answer->inserted[0]->idArticle->idArticle))
 
                         $stock->idArticleMKM = $answer->inserted[0]->idArticle->idArticle;
@@ -42,8 +44,7 @@ class StockService
     public function edit($product, $data)
     {
         //prasarna opravit
-        if($product->base_price != $data['price'])
-        {
+        if ($product->base_price != $data['price']) {
             $product->base_price = $data['price'];
             $product->save();
         }
@@ -51,7 +52,7 @@ class StockService
         if ($data['stockId'] != '') {
             $stock = $this->stockRepository->getById($data['stockId']);
 
-            if($data['quantity'] != 0) {
+            if ($data['quantity'] != 0) {
                 if ($stock->price != $data['price']) {
                     $this->stockRepository->changePrice($stock, $data['price']);
                     if ($this->MKM)
@@ -87,16 +88,18 @@ class StockService
         $stock->save();
 
         if ($this->MKM)
-            if ($stock->idArticleMKM != null) {
-                $answer = $this->MKMService->increaseStock($stock->idArticleMKM, $quantity);
+            $answer = null;
+        if ($stock->idArticleMKM != null) {
+            $answer = $this->MKMService->increaseStock($stock->idArticleMKM, $quantity);
+            \Debugbar::info($answer);
+        }
+        if ($stock->idArticleMKM != null || isset($answer->error)) {
 
-                if (isset($answer->error)) {
+            $answer2 = $this->MKMService->addToStock($stock->product->idProductMKM, $quantity, $stock->price / 25);
+            $stock->idArticleMKM = $answer2->inserted[0]->idArticle->idArticle;
+            $stock->save();
+        }
 
-                    $answer2 = $this->MKMService->addToStock($stock->product->idProductMKM, $quantity, $stock->price / 25);
-                    $stock->idArticleMKM = $answer2->inserted[0]->idArticle->idArticle;
-                    $stock->save();
-                }
-            }
 
     }
 
@@ -106,13 +109,18 @@ class StockService
             $quantity = $stock->quantity;
 
         $stock->quantity -= $quantity;
-        $stock->save();
 
         if ($this->MKM)
             if ($stock->idArticleMKM != null) {
-                $this->MKMService->decreaseStock($stock->idArticleMKM, $quantity);
-
+                $answer = $this->MKMService->decreaseStock($stock->idArticleMKM, $quantity);
+                \Debugbar::info($answer);
+                if (isset($answer->article[0]->error))
+                    $stock->idArticleMKM = null;
             }
+        if ($stock->quantity <= 0 && count($stock->items) == 0)
+            $stock->delete();
+        else
+            $stock->save();
     }
 
 
