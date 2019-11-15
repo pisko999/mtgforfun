@@ -83,7 +83,7 @@ class Stock extends Model
 
     private function getPriceKc($price)
     {
-        $p = $price * 25.5 * 1.1;
+        $p = $price * 25.5;
         if ($p % 10 == 0)
             $p++;
 
