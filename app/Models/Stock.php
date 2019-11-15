@@ -39,7 +39,7 @@ class Stock extends Model
             } catch (\Exception $e) {
                 //\Debugbar::info($answer);
             }
-            //\Debugbar::info($answer);
+            \Debugbar::info($answer);
             $this->save();
         }
     }
@@ -52,6 +52,7 @@ class Stock extends Model
         $mkm = new MKMService();
 
         $mkmProduct = $mkm->getProduct($this->product->idProductMKM);
+        \Debugbar::info($mkmProduct);
         $this->checkPrice($mkmProduct);
         //\Debugbar::info($this->idArticleMKM);
 
