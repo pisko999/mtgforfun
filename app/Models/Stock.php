@@ -46,7 +46,7 @@ class Stock extends Model
 
     public function checkOnMKM()
     {
-        if ($this->product->idProductMKM != null)
+        if ($this->product->idProductMKM == null)
             return;
 
         $mkm = new MKMService();

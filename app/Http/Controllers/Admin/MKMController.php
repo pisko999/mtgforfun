@@ -137,14 +137,26 @@ class MKMController extends Controller
         return redirect()->back();
     }
 
+    public function checkCard($id)
+    {
+        $this->checkCardPrivate($id);
+
+        //return view("home");
+        return redirect()->back();
+
+    }
+
+    public function checkCardApi(Request $request){
+        return $this->checkCardPrivate($request->id);
+    }
+
     /*
      * return
      * 1 success
      * -1 no product id from MKM
      * -2 no stock
      */
-    public function checkCard($id)
-    {
+    private function checkCardPrivate($id){
         $card = $this->cardRepository->getByIdWithProductAndStock($id);
 
         $product = $card->product;
@@ -154,6 +166,7 @@ class MKMController extends Controller
         if (count($stock) == 0)
             return -2;
         foreach ($stock as $item) {
+
             if ($item->idArticleMKM == null)
                 $item->addToMKM();
             else
@@ -162,9 +175,7 @@ class MKMController extends Controller
         }
 
         return 1;
-    }
-    public function checkCardApi(Request $request){
-        return $this->checkCard($request->id);
+
     }
 
     private function getPrice($price)
@@ -199,9 +210,10 @@ class MKMController extends Controller
         $mkm = new MKMService();
 
         $answer = $mkm->getGames();
+        //$answer = $mkm->getProductList();
 
         //$answer = $conn->call("account");
-        \Debugbar::info($answer);
+        //\Debugbar::info($answer);
         //$answer = $mkm->getSingles(1);
         //\Debugbar::info($answer->single[15]);
 
@@ -211,8 +223,9 @@ class MKMController extends Controller
         //    $mkm->decreaseStock($article->idArticle, $article->count);
         //}
         //$answer = $mkm->getProductList();
-        $answer = $mkm->getProduct(372131);
+        //$answer = $mkm->getProduct(372131);
         \Debugbar::info($answer);
+        //Storage::put('public/mkm/productlist.gz', base64_decode($answer->productsfile));
 
         //$answer = $mkm->getExpansions();
         //\Debugbar::info($answer);
@@ -248,7 +261,7 @@ class MKMController extends Controller
 \Debugbar::info($productList);
 */
         //$answer = $mkm->increaseStock(497282389, 4);
-        \Debugbar::info($answer);
+        //\Debugbar::info($answer);
         /*
                 $answer = $mkm->addToStock("250636", "2", "500");
                 \Debugbar::info($answer);

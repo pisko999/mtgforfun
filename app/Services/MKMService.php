@@ -8,8 +8,8 @@ class MKMService
 {
 
     private $baseUrl = "https://api.cardmarket.com/ws/v2.0/output.json/";
-    //private $baseUrl = "https://sandbox.cardmarket.com/ws/v2.0/output.json/";
-//    private $baseUrl = "https://sandbox.mkmapi.eu/ws/v2.0/output.json/";
+    //private $baseUrl = "https://sandbox.cardmarket.com/ws/v1.1/output.json/";
+    //private $baseUrl = "https://sandbox.mkmapi.eu/ws/v2.0/output.json/";
     private $method;
     private $url;
     private $appToken;
@@ -68,6 +68,17 @@ class MKMService
     public function getStock()
     {
         return $this->call("stock");
+    }
+
+    public function getPriceGuide()
+    {
+        return $this->call("priceguide");
+    }
+
+
+    public function getProductList()
+    {
+        return $this->call("productlist");
     }
 
     public function addToStock($idProduct, $count, $price, $condition = "MT", $language = "EN", $comments = "", $isFoil = "false", $isSigned = "false", $isAltered = "false", $isPlayset = "false")
