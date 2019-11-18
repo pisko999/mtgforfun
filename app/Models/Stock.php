@@ -68,7 +68,7 @@ class Stock extends Model
             $priceDiff / $mkmArticle->article->price > 1.05 ||
             $priceDiff / $mkmArticle->article->price < .95 ||
             $mkmArticle->article->count != $this->quantity)
-            $mkm->changeArticleInStock($this->idArticleMKM, $this->quantity, $this->getPriceEur());
+            $mkm->changeArticleInStock($this->idArticleMKM, $this->quantity, $this->getPriceEur(), $this->state, $this->language,'', $this->product->card->foil == 1? 'true':'false');
 
     }
 
