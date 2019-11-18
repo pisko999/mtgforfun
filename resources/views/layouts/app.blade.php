@@ -24,7 +24,7 @@
     <link href="{{ asset('css/my.css') }}" rel="stylesheet">
 </head>
 <body>
-<div id="app" style="min-width: 1600px">
+<div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -85,23 +85,16 @@
             </div>
         </div>
     </nav>
-    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-        <div class="container">
-
-        </div>
-    </nav>
 
     <main class="py-4">
-        <div align="center">
-            <div
-                style="width: 10%; float: left; text-align: center; display: inline; margin-left:auto; margin-right: auto; min-width: 300px">
+        <div align="center" class="row">
+            <div class="col-12 col-sm-2">
                 <ul class="navbar-nav ">
                     <li class="nav-item">
-                        <div style="align-content: center">
+                        <div>
                             {{Form::open(['method' => 'GET', 'route'=> 'shopping.search', 'name' => 'searchForm', 'id' => 'searchForm'])}}
-                            <div style="display: flex">
-                                <input type="text" id="searchedText" name="searchedText" autocomplete="off"
-                                       style="width: 200px">
+                            <div >
+                                <input type="text" id="searchedText" name="searchedText" autocomplete="off">
                                 <script>
                                     $().ready(function () {
                                             $("#quantity").keydown(function (event) {
@@ -114,16 +107,15 @@
                                         }
                                     )
                                 </script>
-                                <button type="submit" style="width: 100px; margin: 3px">Search</button>
+                                <button type="submit">Search</button>
                             </div>
                             <div name="autoUl" id="autoUl"
-                                 style="border: 1px solid;z-index: 999;position: absolute; background-color: white; width: 200px">
+                                 style="border: 1px solid;z-index: 999;position: absolute; background-color: white">
 
                             </div>
                             {{Form::close()}}
                         </div>
                     </li>
-                    <hr/>
                     @foreach($navbarItems as $navbarItem)
                         <li class="nav-item">
                             <a href="{!! route('shopping.category', ['category'=>$navbarItem->getCategory()])  !!}">
@@ -140,9 +132,13 @@
                 </ul>
 
             </div>
+
+            <div class="col-12 col-sm-8">
+                @yield('content')
+            </div>
+
             @if(!Auth::guest() && Auth::user()->role >= 4)
-                <div
-                    style="width: 8%; float: right; text-align: center; display: inline; margin-left:auto; margin-right: auto; min-width: 144px">
+                <div class="col-12 col-sm-2">
                     <ul class="navbar-nav ">
                         <li class="nav-item">
                             <a href="{!! route('admin.addCardSelect') !!}">Add card</a>
@@ -207,9 +203,7 @@
                     </ul>
                 </div>
             @endif
-            <div style="width:100%; float: inside; display: inline">
-                @yield('content')
-            </div>
+
         </div>
     </main>
 </div>
