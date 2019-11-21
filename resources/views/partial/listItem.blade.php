@@ -46,7 +46,7 @@ $quantity =
 $price =
     (isset($stockItem->price) && ($stockItem->quantity > 0)) ?
         $stockItem->price :
-        $product->price->MT;
+        $product->base_price;
 
 $foil =
     isset($item->foil) && $item->foil == 1 ?
@@ -101,7 +101,7 @@ $state = isset($stockItem->state) ? $states[$stockItem->state] : "";
         </tr>
         <tr>
             <td>{{$item->edition != null?$item->edition->name:''}}</td>
-            <td>{{$foil}} {{$state}}</td>
+            <td>{{$foil}} {{$state}} {{isset($stockItem)?$stockItem->stock:''}}</td>
             <td>
                 @if($item instanceof \App\Models\Card)
                     @foreach($item->colors as $color)

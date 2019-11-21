@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model
 {
-    protected $fillable = ['product_id', 'initial_price', 'quantity', 'price', 'language', 'state', 'idArticleMKM'];
+    protected $fillable = ['product_id', 'initial_price', 'quantity', 'price', 'language', 'state', 'idArticleMKM', 'stock'];
 
     public function product()
     {
@@ -24,10 +24,10 @@ class Stock extends Model
         return $this->hasMany('App\Models\Item');
     }
 
-    public function addToMKM()
+    public function addToMKM($p)
     {
         $mkm = new MKMService();
-        $mkmProduct = $mkm->getProduct($this->product->idProductMKM);
+        $mkmProduct = $p;//$mkm->getProduct($this->product->idProductMKM);
         $this->checkPrice($mkmProduct);
         $quantity = $this->quantity > 30 ? 30 : $this->quantity;
         //\Debugbar::info($quantity);
@@ -44,15 +44,15 @@ class Stock extends Model
         }
     }
 
-    public function checkOnMKM()
+    public function checkOnMKM($p)
     {
         if ($this->product->idProductMKM == null)
             return;
 
         $mkm = new MKMService();
 
-        $mkmProduct = $mkm->getProduct($this->product->idProductMKM);
-        \Debugbar::info($mkmProduct);
+        $mkmProduct = $p;//$mkm->getProduct($this->product->idProductMKM);
+        //\Debugbar::info($mkmProduct);
         $this->checkPrice($mkmProduct);
         //\Debugbar::info($this->idArticleMKM);
 

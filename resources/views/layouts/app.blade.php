@@ -195,6 +195,10 @@
 
                         </li>
                         <li class="nav-item">
+                            <a href="{!! route('admin.stocking') !!}">stocking</a>
+
+                        </li>
+                        <li class="nav-item">
 
                         </li>
                         <li class="nav-item">

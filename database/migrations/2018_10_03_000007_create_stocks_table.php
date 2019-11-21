@@ -19,6 +19,7 @@ class CreateStocksTable extends Migration
             $table->unsignedInteger('initial_price');
             $table->unsignedInteger('quantity');
             $table->unsignedInteger('price');
+            $table->smallInteger('stock')->default(1);
             $table->string('language')->default('EN');
             $table->string('state',2)->default('MT');
             $table->string('idArticleMKM')->nullable(); //idArticle from mkm

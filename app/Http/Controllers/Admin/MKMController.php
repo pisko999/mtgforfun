@@ -157,20 +157,25 @@ class MKMController extends Controller
      * -2 no stock
      */
     private function checkCardPrivate($id){
+        $mkm = new MKMService();
         $card = $this->cardRepository->getByIdWithProductAndStock($id);
 
         $product = $card->product;
         $stock = $product->stock;
         if ($product->idProductMKM == null)
             return -1;
+        $p = $mkm->getProduct($product->idProductMKM);
+        $f = $card->foil? "TRENDFOIL" : "TREND";
+        $product->base_price = $this->getPrice($p->product->priceGuide->$f);
+        $product->save();
         if (count($stock) == 0)
             return -2;
         foreach ($stock as $item) {
 
             if ($item->idArticleMKM == null)
-                $item->addToMKM();
+                $item->addToMKM($p);
             else
-                $item->checkOnMKM();
+                $item->checkOnMKM($p);
 
         }
 
@@ -209,7 +214,7 @@ class MKMController extends Controller
 
         $mkm = new MKMService();
 
-        $answer = $mkm->getGames();
+        //$answer = $mkm->getGames();
         //$answer = $mkm->getProductList();
 
         //$answer = $conn->call("account");
@@ -223,7 +228,7 @@ class MKMController extends Controller
         //    $mkm->decreaseStock($article->idArticle, $article->count);
         //}
         //$answer = $mkm->getProductList();
-        //$answer = $mkm->getProduct(372131);
+        $answer = $mkm->getProduct(372131);
         \Debugbar::info($answer);
         //Storage::put('public/mkm/productlist.gz', base64_decode($answer->productsfile));
 

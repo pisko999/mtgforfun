@@ -145,4 +145,7 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
     Route::get('/admin/checkCardOnMKM/{id}', ['as' => 'admin.checkCardOnMKM', 'uses' => 'Admin\MKMController@checkCard']);
     Route::get('/admin/checkCardOnMKMApi', ['as' => 'admin.checkCardOnMKMApi', 'uses' => 'Admin\MKMController@checkCardApi']);
 
+    Route::get('/admin/stocking', ['as' => 'admin.stockingList', 'uses' => 'Admin\StockingController@stockingList']);
+    Route::post('/admin/stocking', ['as' => 'admin.stocking', 'uses' => 'Admin\StockingController@stockingPost']);
+
 });
