@@ -219,7 +219,7 @@ class MKMController extends Controller
 
         //$answer = $conn->call("account");
         //\Debugbar::info($answer);
-        //$answer = $mkm->getSingles(1);
+        $answer = $mkm->getSingles(2582);
         //\Debugbar::info($answer->single[15]);
 
         //$answer = $mkm->getStock();
@@ -228,7 +228,7 @@ class MKMController extends Controller
         //    $mkm->decreaseStock($article->idArticle, $article->count);
         //}
         //$answer = $mkm->getProductList();
-        $answer = $mkm->getProduct(372131);
+        //$answer = $mkm->getProduct(372131);
         \Debugbar::info($answer);
         //Storage::put('public/mkm/productlist.gz', base64_decode($answer->productsfile));
 

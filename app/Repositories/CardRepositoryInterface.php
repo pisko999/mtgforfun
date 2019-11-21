@@ -27,6 +27,8 @@ interface CardRepositoryInterface
     public function getCardsByEditionGet($editionId);
 
     public function getCardsByEditionWithProductAndStock($edition_id);
+    public function getCardsByEditionWithProduct($edition_id);
+    public function getCardsByEditionWithProductAndColorsWithoutFoil($edition_id);
 
     public function getCardsByEditionAndFoilWithProductAndStock($edition_id, $foil);
 

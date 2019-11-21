@@ -149,6 +149,29 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
 
     }
 
+    public function getCardsByEditionWithProduct($edition_id)
+    {
+        $q = $this->model;
+        $q = $this->searchByEdition($q, $edition_id);
+        $q = $this->searchByLang($q, 'en');
+        $q = $this->joinProduct($q);
+        $q = $q->orderby('number');
+        return $q->get();
+
+    }
+
+    public function getCardsByEditionWithProductAndColorsWithoutFoil($edition_id)
+    {
+        $q = $this->model;
+        $q = $this->searchByEdition($q, $edition_id);
+        $q = $this->searchByLang($q, 'en');
+        $q = $this->searchByFoil($q, 0);
+        $q = $this->joinProductAndColors($q);
+        $q = $q->orderby('number');
+        return $q->get();
+
+    }
+
     public function getCardsByEditionAndFoilWithProductAndStock($edition_id, $foil)
     {
         $q = $this->model;
@@ -265,6 +288,12 @@ class CardRepository extends ProductModelRepository implements CardRepositoryInt
     {
         $q = $q->join('products', 'cards.id', '=', 'products.id')
             ->with('product.stock');
+        return $q;
+    }
+
+    private function joinProductAndColors($q){
+        $q = $q->join('products', 'cards.id', '=', 'products.id')
+        ->with('colors');
         return $q;
     }
 

@@ -147,5 +147,7 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
 
     Route::get('/admin/stocking', ['as' => 'admin.stockingList', 'uses' => 'Admin\StockingController@stockingList']);
     Route::post('/admin/stocking', ['as' => 'admin.stocking', 'uses' => 'Admin\StockingController@stockingPost']);
+    Route::get('/admin/stockingShowGet', ['as' => 'admin.stockingShowGet', 'uses' => 'Admin\StockingController@stockingShowGet']);
+    Route::post('/admin/stockingShow', ['as' => 'admin.stockingShow', 'uses' => 'Admin\StockingController@stockingShow']);
 
 });

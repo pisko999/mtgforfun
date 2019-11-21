@@ -47,28 +47,60 @@ class StockingController extends Controller
         return redirect()->back();
     }
 
-    public function stockingShow(StockingShowRequest $request)
+    public function stockingShowGet()
     {
-        $allCards = $this->cardRepository->getCardsByEditionWithProductAndStock($request->edition);
 
-        switch ($request->stock) {
-            case 1:
-                $cards = $allCards->filter(function ($value, $key) {
-                    return $value->product->base_price < 25;
-                });
-                break;
-            case 2:
-                $cards = $allCards->filter(function ($value, $key) {
-                    return $value->product->base_price >= 25 && $value->product->base_price < 50;
-                });
-                break;
-            case 3:
-                $cards = $allCards->filter(function ($value, $key) {
-                    return $value->product->base_price >= 50;
-                });
-                break;
+        $editions = $this->editionRepository->getArrayForSelect();
+        $r = 'admin.stockingShow';
+        return view('admin.editionGet', compact('editions', 'r'));
+    }
+
+    public function stockingShow(StockingPostRequest $request)
+    {
+        $cards = $this->cardRepository->getCardsByEditionWithProductAndColorsWithoutFoil($request->edition);
+        $maxCard = $this->cardRepository->getCardByNameAndEdition("Plains", $request->edition)->first();
+        if($maxCard != null)
+            $cards = $cards->filter(function($value)use ($maxCard){
+                return $value->number < $maxCard->number;
+            });
+        /*
+                switch ($request->stock) {
+                    case 1:
+                        $cards = $allCards->filter(function ($value, $key) {
+                            return $value->product->base_price < 25;
+                        });
+                        break;
+                    case 2:
+                        $cards = $allCards->filter(function ($value, $key) {
+                            return $value->product->base_price >= 25 && $value->product->base_price < 50;
+                        });
+                        break;
+                    case 3:
+                        $cards = $allCards->filter(function ($value, $key) {
+                            return $value->product->base_price >= 50;
+                        });
+                        break;
+                }
+        */
+
+        $colors = ['White', 'Blue', 'Black', 'Red', 'Green'];
+        $max = 0;
+        foreach ($colors as $color) {
+            $list[$color] = $cards->filter(function ($value) use ($color) {
+                return count($value->colors) == 1 && $value->colors[0]->color == $color;
+            })->values();
+            if (count($list[$color]) > $max)
+                $max = count($list[$color]);
         }
 
-        return view('admin.showStocking', compact('cards'));
+        $list["Multicolor"] = $cards->filter(function ($value) {
+            return count($value->colors) > 1;
+        })->values();
+
+        $list["Colorless"] = $cards->filter(function ($value) {
+            return count($value->colors) < 1;
+        })->values();
+
+        return view('admin.showStocking', compact('list', 'colors', 'max'));
     }
 }
