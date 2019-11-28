@@ -21,6 +21,7 @@ class CreateCommandsTable extends Migration
             $table->unsignedInteger('status_id')->default(1);
             $table->unsignedInteger('billing_address_id')->nullable();
             $table->unsignedInteger('delivery_address_id')->nullable();
+            $table->unsignedInteger('idOrderMKM')->nullable();
             $table->foreign('billing_address_id')->references('id')->on('addresses');
             $table->foreign('delivery_address_id')->references('id')->on('addresses');
 //            $table->foreign('client_id')->references('id')->on('clients');

@@ -217,9 +217,9 @@ class MKMController extends Controller
         //$answer = $mkm->getGames();
         //$answer = $mkm->getProductList();
 
-        //$answer = $conn->call("account");
+        $answer = $mkm->getSellerOrders(2);
         //\Debugbar::info($answer);
-        $answer = $mkm->getSingles(2582);
+        //$answer = $mkm->getSingles(2582);
         //\Debugbar::info($answer->single[15]);
 
         //$answer = $mkm->getStock();

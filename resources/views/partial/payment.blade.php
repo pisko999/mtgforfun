@@ -12,8 +12,8 @@
         <td>{{$payment->type}}</td>
     </tr>
     <tr>
-        <td>Address : </td>
-        <td>{{$payment->address}}</td>
+        <td>{{$payment->type == "transfer"?"Account : ":"Address :" }}</td>
+        <td>{{$payment->type == "transfer"? "2901296514/2010":$payment->address}}</td>
     </tr>
     <tr>
         <td>currency : </td>

@@ -8,7 +8,7 @@ class MKMService
 {
 
     private $baseUrl = "https://api.cardmarket.com/ws/v2.0/output.json/";
-    //private $baseUrl = "https://sandbox.cardmarket.com/ws/v1.1/output.json/";
+    //private $baseUrl = "https://sandbox.cardmarket.com/ws/v2.0/output.json/";
     //private $baseUrl = "https://sandbox.mkmapi.eu/ws/v2.0/output.json/";
     private $method;
     private $url;
@@ -45,6 +45,11 @@ class MKMService
         return $this->call("games");
     }
 
+    public function getAccount()
+    {
+        return $this->call("account");
+    }
+
     public function getExpansions($idGame = 1)
     {
         return $this->call("games/" . $idGame . "/expansions");
@@ -75,6 +80,15 @@ class MKMService
         return $this->call("priceguide");
     }
 
+//bought or 1
+//paid or 2
+//sent or 4
+//received or 8
+//lost or 32
+//cancelled or 128
+    public function getSellerOrders($state){
+        return $this->call("orders/1/" . $state);
+    }
 
     public function getProductList()
     {

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Command extends Model
 {
-    protected $fillable = ['client_id', 'billing_address_id', 'delivery_address_id', 'payment_id', 'status_id'];
+    protected $fillable = ['client_id', 'billing_address_id', 'delivery_address_id', 'payment_id', 'status_id', 'idOrderMKM'];
 
     public function client()
     {
