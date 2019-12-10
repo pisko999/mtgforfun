@@ -129,6 +129,9 @@
                     <li class="nav-item">
                         <a href="{!! route('admin.getBuyList') !!}">Get BuyList</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{!! route('admin.getBuyListByEditionGet') !!}">Get BuyList by edition</a>
+                    </li>
                 </ul>
 
             </div>

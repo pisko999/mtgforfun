@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\EditionGetRequest;
 use App\Repositories\BoosterRepositoryInterface;
 use App\Repositories\CardRepositoryInterface;
 use App\Repositories\CommandRepositoryInterface;
@@ -26,7 +27,49 @@ class BuyListController extends Controller
         $this->cardRepository = $cardRepository;
     }
 
-    public function getBuyList($edition_id = null)
+
+    public function getBuyListByEditionGet()
+    {
+        $editions = $this->editionRepository->getArrayForSelect();
+        return view('admin.getBuyListByEditionGet', compact('editions'));
+    }
+
+    public function getBuyListByEditionPost(EditionGetRequest $request){
+        $edition = $this->editionRepository->getById($request->edition);
+        $cards = $edition->cards;
+        $buyList = array();
+        \Debugbar::info($cards);
+
+        foreach ($cards as $card)
+        {
+            if($card->foil)
+                continue;
+
+            $s = $card->product->stock;
+
+            $q = 0;
+
+            foreach ($s as $c) {
+                $q += $c->quantity;
+            }
+
+            //add different for  common, uncommon, rare, mythic
+            $count = 4;
+            if($card->rarity == 'U')
+                $count = 8;
+            elseif($card->rarity == 'C')
+                $count = 16;
+
+            if ($q < $count) {
+                $card->quantity = $count - $q;
+                array_push($buyList, $card);
+            }
+        }
+        return view('admin.getBuyListByEditionPost', compact('edition', 'buyList'));
+
+    }
+
+    public function getBuyList()
     {
         $standartEditions = $this->editionRepository->getBuyListEditions();
 
