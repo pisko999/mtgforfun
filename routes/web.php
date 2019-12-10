@@ -19,7 +19,8 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
             return view('welcome');
         });
     */
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@indexMKM')->name('home');
+    /*
     Route::get('/home', 'HomeController@index')->name('home');
 
     //shopping routes
@@ -149,5 +150,5 @@ Route::group(['middleware' => 'navbarMiddleware'], function () {
     Route::post('/admin/stocking', ['as' => 'admin.stocking', 'uses' => 'Admin\StockingController@stockingPost']);
     Route::get('/admin/stockingShowGet', ['as' => 'admin.stockingShowGet', 'uses' => 'Admin\StockingController@stockingShowGet']);
     Route::post('/admin/stockingShow', ['as' => 'admin.stockingShow', 'uses' => 'Admin\StockingController@stockingShow']);
-
+*/
 });

@@ -25,4 +25,8 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function indexMKM(){
+        return \Redirect::to('https://www.cardmarket.com/en/Magic/Users/Pisko88');
+    }
 }
