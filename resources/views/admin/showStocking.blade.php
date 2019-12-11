@@ -19,8 +19,22 @@
                             $c = "green";
                         if ($list[$color][$i]->base_price >= 50)
                             $c = "orange";
+                        switch($list[$color][$i]->card->rarity){
+                            case 'M':
+                                $d = 'red';
+                                break;
+                            case 'R':
+                                $d = 'gold';
+                                break;
+                            case 'U':
+                                $d = 'grey';
+                                break;
+                            default:
+                                $d = 'white';
+                                break;
+                        }
                         ?>
-                        <td style="background-color: {{$c}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list[$color][$i]->number}}</td>
+                        <td style="background-color: {{$d}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list[$color][$i]->number}}</td>
                         <td style="background-color: {{$c}}; border: 1px black solid; padding: 0px; margin: 0px">{{explode('//',$list[$color][$i]->name)[0]}}</td>
                         <td style="border: 1px black solid; padding: 0px; margin: 0px; width: 16px;"></td>
                     @else
@@ -61,8 +75,23 @@
                         if ($list['Multicolor'][$i + $j * $m]->base_price >= 50)
                             $c = "orange";
 
+
+                        switch($list[$color][$i]->card->rarity){
+                        case 'M':
+                            $d = 'red';
+                            break;
+                        case 'R':
+                            $d = 'gold';
+                            break;
+                        case 'U':
+                            $d = 'grey';
+                            break;
+                        default:
+                        $d = 'white';
+                        break;
+                        }
                         ?>
-                        <td style="background-color: {{$c}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list['Multicolor'][$i + $j * $m]->number}}</td>
+                        <td style="background-color: {{$d}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list['Multicolor'][$i + $j * $m]->number}}</td>
                         <td style="background-color: {{$c}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list['Multicolor'][$i + $j * $m]->name}}</td>
                         <td style="border: 1px black solid; padding: 0px; margin: 0px; width: 16px;"></td>
                     @else
@@ -81,8 +110,23 @@
                             $c = "green";
                         if ($list['Colorless'][$i + $k * $m]->base_price >= 50)
                             $c = "orange";
+
+                            switch($list[$color][$i]->card->rarity){
+                                case 'M':
+                                    $d = 'red';
+                                    break;
+                                case 'R':
+                                    $d = 'gold';
+                                    break;
+                                case 'U':
+                                    $d = 'grey';
+                                    break;
+                                default:
+                                    $d = 'white';
+                                    break;
+                                    }
                         ?>
-                        <td style="background-color: {{$c}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list['Colorless'][$i + $k * $m]->number}}</td>
+                        <td style="background-color: {{$d}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list['Colorless'][$i + $k * $m]->number}}</td>
                         <td style="background-color: {{$c}}; border: 1px black solid; padding: 0px; margin: 0px">{{$list['Colorless'][$i + $k * $m]->name}}</td>
                         <td style="border: 1px black solid; padding: 0px; margin: 0px; width: 16px;"></td>
                     @else
