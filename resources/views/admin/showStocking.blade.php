@@ -76,7 +76,7 @@
                             $c = "orange";
 
 
-                        switch($list[$color][$i]->card->rarity){
+                        switch($list['Multicolor'][$i + $j * $m]->card->rarity){
                         case 'M':
                             $d = 'red';
                             break;
@@ -111,7 +111,7 @@
                         if ($list['Colorless'][$i + $k * $m]->base_price >= 50)
                             $c = "orange";
 
-                            switch($list[$color][$i]->card->rarity){
+                            switch($list['Colorless'][$i + $k * $m]->card->rarity){
                                 case 'M':
                                     $d = 'red';
                                     break;
